@@ -44,44 +44,30 @@ export function Navbar() {
     : "bg-navy-900/80 border-b border-white/10 py-5";
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${navClass}`}
-    >
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${navClass}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
 
           {/* ================= LOGO SECTION ================= */}
           <Link to="/" className="flex items-center gap-3">
 
-            {/* IEN Logo */}
             <img
               src="/logo.png"
               alt="IEN Logo"
-              className={`transition-all duration-300 ${
-                scrolled ? "h-9 w-9" : "h-10 w-10"
-              }`}
+              className={`transition-all duration-300 ${scrolled ? "h-9 w-9" : "h-10 w-10"}`}
               loading="eager"
             />
 
-            {/* Divider */}
             <div className="w-[1px] h-6 bg-white/20" />
 
-            {/* PCCOE Logo */}
             <img
               src="/college.png"
               alt="PCCOE Logo"
-              className={`transition-all duration-300 ${
-                scrolled ? "h-9 w-9" : "h-10 w-10"
-              }`}
+              className={`transition-all duration-300 ${scrolled ? "h-9 w-9" : "h-10 w-10"}`}
               loading="eager"
             />
 
-            {/* Text */}
-            <span
-              className={`font-bold text-white transition-all duration-300 ${
-                scrolled ? "text-lg" : "text-xl"
-              }`}
-            >
+            <span className={`font-bold text-white transition-all duration-300 ${scrolled ? "text-lg" : "text-xl"}`}>
               IEN <span className="text-gold-500">PCCOE</span>
             </span>
           </Link>
@@ -96,9 +82,7 @@ export function Navbar() {
                   key={link.name}
                   to={link.path}
                   className={`text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "text-white"
-                      : "text-slate-300 hover:text-white"
+                    isActive ? "text-white" : "text-slate-300 hover:text-white"
                   }`}
                 >
                   {link.name}
@@ -131,12 +115,8 @@ export function Navbar() {
                         to={div.path}
                         className="block p-3 rounded-md hover:bg-white/5 transition"
                       >
-                        <div className="font-semibold text-white">
-                          {div.name}
-                        </div>
-                        <div className="text-xs text-slate-400">
-                          {div.desc}
-                        </div>
+                        <div className="font-semibold text-white">{div.name}</div>
+                        <div className="text-xs text-slate-400">{div.desc}</div>
                       </Link>
                     ))}
                   </motion.div>
@@ -144,12 +124,21 @@ export function Navbar() {
               </AnimatePresence>
             </div>
 
+            {/* ================= FLAGSHIP EVENT ================= */}
+            <Link
+              to="/ciil/ennovatex"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-gold-500/30 bg-gold-500/10 hover:bg-gold-500/20 transition text-gold-400 font-semibold text-sm"
+            >
+              <span className="w-2 h-2 bg-gold-500 rounded-full"></span>
+              ENNOVATE’X
+            </Link>
+
             <Button href="/exams" variant="glass" size="sm">
               Exams Portal
             </Button>
           </div>
 
-          {/* ================= MOBILE MENU BUTTON ================= */}
+          {/* ================= MOBILE BUTTON ================= */}
           <button
             className="md:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
@@ -172,14 +161,17 @@ export function Navbar() {
             <div className="px-4 py-6 space-y-4">
 
               {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className="block text-white font-semibold"
-                >
+                <Link key={link.name} to={link.path} className="block text-white font-semibold">
                   {link.name}
                 </Link>
               ))}
+
+              <Link
+                to="/ciil/ennovatex"
+                className="block text-gold-400 font-semibold"
+              >
+                ENNOVATE’X (Flagship Event)
+              </Link>
 
               <div className="pt-4">
                 <Button href="/exams" className="w-full">
