@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Users, Rocket, ShieldCheck, TrendingUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "../components/ui/Button";
-import { AnimatedCounter } from "../components/ui/AnimatedCounter";
-
-const stats = [
-  { label: "Active Innovators", value: 1.2, suffix: "k+", isDecimal: true, icon: Users },
-  { label: "Funded Projects", value: 150, suffix: "+", isDecimal: false, icon: Rocket },
-  { label: "Patents Filed", value: 45, suffix: "+", isDecimal: false, icon: ShieldCheck },
-  { label: "Startups Incubated", value: 12, suffix: "", isDecimal: false, icon: TrendingUp },
-];
 
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
   const [mouseX, setMouseX] = useState(0);
 
-  const isMobile =
-    typeof window !== "undefined" && window.innerWidth < 768;
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
-  /* Desktop subtle mouse parallax */
+  // Desktop mouse parallax
   useEffect(() => {
     if (isMobile) return;
 
@@ -32,130 +29,111 @@ export default function Home() {
   }, [isMobile]);
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950 text-white pt-24">
 
-      {/* ===== Animated Background Gradient (Lightweight) ===== */}
-      {!isMobile && (
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(270deg,#0f172a,#0b1c35,#0f172a)] bg-[length:400%_400%] animate-[gradientMove_18s_ease_infinite]" />
-      )}
+      {/* ================= BACKGROUND GLOW ================= */}
+      <motion.div
+        animate={
+          !isMobile && !shouldReduceMotion
+            ? { scale: [1, 1.1, 1] }
+            : undefined
+        }
+        transition={
+          !isMobile && !shouldReduceMotion
+            ? { duration: 10, repeat: Infinity }
+            : undefined
+        }
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+        ${isMobile ? "w-[300px] h-[300px] blur-[50px]" : "w-[900px] h-[900px] blur-[140px]"} 
+        bg-gold-500/10 rounded-full pointer-events-none`}
+      />
 
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-24 overflow-hidden">
-
-        {/* Floating Background Logo */}
-        {!isMobile && (
-          <motion.img
-            src="/bird.png"
-            alt=""
-            style={{ x: mouseX }}
-            animate={!shouldReduceMotion ? { y: [-10, 10, -10] } : undefined}
-            transition={
-              !shouldReduceMotion
-                ? { duration: 10, repeat: Infinity, ease: "easeInOut" }
-                : undefined
-            }
-            className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[650px] opacity-10 pointer-events-none"
-          />
-        )}
-
-        {/* Soft Glow */}
-        {!isMobile && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/10 blur-[80px] rounded-full pointer-events-none -z-10" />
-        )}
-
-        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-
-          {/* Badge */}
-          <motion.div
-            initial={!shouldReduceMotion ? { opacity: 0, y: 10 } : false}
-            animate={!shouldReduceMotion ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
-          >
-            <span className="h-2 w-2 rounded-full bg-gold-500 animate-pulse" />
-            <span className="text-sm text-slate-300 tracking-wide uppercase">
-              PCCOE Innovation Hub
-            </span>
-          </motion.div>
-
-          {/* Heading */}
-          <motion.h1
-            initial={!shouldReduceMotion ? { opacity: 0, y: 20 } : false}
-            animate={!shouldReduceMotion ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
-          >
-            Engineering the Future of{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">
-              Innovation
-            </span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={!shouldReduceMotion ? { opacity: 0, y: 20 } : false}
-            animate={!shouldReduceMotion ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10"
-          >
-            The central ecosystem for research, technology, and entrepreneurship at PCCOE.
-            Turning bold ideas into impactful startups.
-          </motion.p>
-
-          {/* Buttons */}
-          <motion.div
-            initial={!shouldReduceMotion ? { opacity: 0, y: 20 } : false}
-            animate={!shouldReduceMotion ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col sm:flex-row justify-center gap-4"
-          >
-            <Button href="/divisions" size="lg" icon={<ArrowRight size={18} />}>
-              Explore Divisions
-            </Button>
-            <Button href="/contact" variant="glass" size="lg">
-              Join IEN
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ================= STATS SECTION ================= */}
-      <section className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-
-          {stats.map((stat, index) => (
+      {/* ================= FLOATING PARTICLES (DESKTOP ONLY) ================= */}
+      {!isMobile && !shouldReduceMotion && (
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(25)].map((_, i) => (
             <motion.div
-              key={stat.label}
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-            >
-              <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gold-400">
-                <stat.icon className="w-6 h-6" />
-              </div>
-
-              <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                {!isMobile ? (
-                  <AnimatedCounter
-                    value={stat.value}
-                    suffix={stat.suffix}
-                    isDecimal={stat.isDecimal}
-                  />
-                ) : (
-                  <>
-                    {stat.value}
-                    {stat.suffix}
-                  </>
-                )}
-              </div>
-
-              <div className="text-xs md:text-sm text-slate-400 uppercase tracking-wider">
-                {stat.label}
-              </div>
-            </motion.div>
+              key={i}
+              className="absolute w-1 h-1 bg-gold-400/20 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{ y: [0, -40, 0] }}
+              transition={{
+                duration: 8 + Math.random() * 10,
+                repeat: Infinity,
+              }}
+            />
           ))}
         </div>
+      )}
+
+      {/* ================= FLOATING WATERMARK LOGO ================= */}
+      {!isMobile && (
+        <motion.img
+          src="/bird.png"
+          alt=""
+          style={{ x: mouseX }}
+          animate={
+            !shouldReduceMotion ? { y: [-10, 10, -10] } : undefined
+          }
+          transition={
+            !shouldReduceMotion
+              ? { duration: 8, repeat: Infinity }
+              : undefined
+          }
+          className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] opacity-10 pointer-events-none"
+        />
+      )}
+
+      {/* ================= HERO CONTENT ================= */}
+      <section className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6"
+        >
+          Engineering the Future of{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">
+            Innovation
+          </span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10"
+        >
+          The central innovation ecosystem of PCCOE —
+          building startups, empowering creators, shaping futures.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex flex-col sm:flex-row justify-center gap-4"
+        >
+          <Button
+            href="/divisions"
+            size="lg"
+            icon={<ArrowRight size={18} />}
+          >
+            Explore Divisions
+          </Button>
+
+          <Button
+            href="/ciil/ennovatex"
+            variant="glass"
+            size="lg"
+          >
+            ENNOVATE’X
+          </Button>
+        </motion.div>
       </section>
     </div>
   );
