@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { ArrowRight, Users, Target, Lightbulb, Rocket, Presentation, Award, CheckCircle2, ChevronDown, Zap, ShieldCheck, Briefcase, ChevronRight } from 'lucide-react';
+import { Lightbulb, Rocket, Presentation, Award, CheckCircle2, ChevronDown, ShieldCheck } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Section } from '../components/ui/Section';
 
@@ -51,22 +51,13 @@ const eventFlow = [
   }
 ];
 
-const gains = [
-  'Real Startup Ecosystem Exposure',
-  'Networking with Founders & Investors',
-  'Incubation & Mentorship Continuity',
-  'Investor Visibility',
-  'Market Validation Experience',
-  'Confidence in Execution',
-  'Industry-Level Feedback'
-];
-
-const whyMatters = [
-  'Problem-first thinking',
-  'Team synergy',
-  'Mentor-driven corrections',
-  'Real-world pitching exposure',
-  'Market feasibility focus'
+const whyParticipate = [
+  { title: 'Real Startup Exposure', desc: 'Move from raw idea to market validation.' },
+  { title: 'Networking & Mentorship', desc: 'Connect with founders, investors, and industry experts.' },
+  { title: 'Incubation Continuity', desc: 'Top teams get CIIL incubation and seed funding prep.' },
+  { title: 'Problem-First Focus', desc: 'Solve real problems, don\'t just write code.' },
+  { title: 'Pitching Experience', desc: 'Learn to sell your vision to a panel of judges.' },
+  { title: 'Team Synergy', desc: 'Form cross-domain teams and build together.' }
 ];
 
 const faqs = [
@@ -95,7 +86,6 @@ const faqs = [
 export default function EnnovateX() {
   const [expandedDay, setExpandedDay] = useState<number | null>(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [showDifferent, setShowDifferent] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -116,7 +106,7 @@ export default function EnnovateX() {
       {/* Global Floating Particles */}
       {shouldAnimate && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <motion.div
               key={`dot-${i}`}
               className="absolute w-1 h-1 md:w-1.5 md:h-1.5 bg-gold-400/15 rounded-full"
@@ -140,9 +130,9 @@ export default function EnnovateX() {
       )}
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-32">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-16">
         {/* Spotlight Glow */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[40px]' : 'blur-[80px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
         
         <motion.div 
           initial={shouldAnimate ? { opacity: 0 } : { opacity: 1 }}
@@ -257,106 +247,46 @@ export default function EnnovateX() {
         </motion.div>
       </section>
 
-      {/* CIIL Logical Hierarchy Section */}
+      {/* Why Participate */}
       <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col md:flex-row gap-12 items-center"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center mb-12"
           >
-            {/* Structured Flow Visual */}
-            <div className="flex flex-col items-center shrink-0">
-              <div className="text-xs text-slate-400 tracking-widest uppercase font-bold">IEN PCCOE</div>
-              <div className="w-[1px] h-8 bg-gradient-to-b from-slate-500 to-gold-500 my-2" />
-              <div className="text-sm text-gold-400 tracking-widest uppercase font-bold">CIIL</div>
-              <div className="w-[1px] h-8 bg-gradient-to-b from-gold-500 to-gold-300 my-2" />
-              <div className="text-base text-white tracking-widest uppercase font-bold">Ennovate’X</div>
-            </div>
-            
-            {/* Content */}
-            <div className="border-l-2 border-gold-500/30 pl-8 relative">
-              <div className="absolute -left-[2px] top-0 w-[2px] h-12 bg-gold-400" />
-              <div className="absolute top-0 left-0 w-32 h-32 bg-gold-500/10 blur-[40px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-2 relative z-10">Powered by CIIL</h2>
-              <h3 className="text-gold-500/80 text-sm md:text-base tracking-widest uppercase mb-6 relative z-10">Center for Innovation & Industry Linkage</h3>
-              <p className="text-slate-400 font-light leading-relaxed relative z-10">
-                Ennovate’X is conducted under CIIL, the innovation and industry collaboration wing of IEN PCCOE. CIIL focuses on bridging academia with industry, enabling real-world exposure, startup validation, and entrepreneurial mentorship.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* About Section */}
-      <Section className="relative z-20 pt-24 pb-24 border-t border-white/5">
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[80px]' : 'blur-[120px]'} pointer-events-none mix-blend-screen z-0`} />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
-              About <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Ennovate’X</span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+              Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Participate</span>
             </h2>
-            <div className="space-y-6 text-lg text-slate-300 font-light leading-relaxed">
-              <p>
-                Ennovate’X is a 3-day immersive startup sprint designed to simulate the real-world entrepreneurial journey. Participants move from raw idea validation to structured pitch delivery under mentor supervision.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                {[
-                  '60–90 second idea pitching round',
-                  'Real-time audience voting',
-                  'Startup team formation (4–5 members)',
-                  'Mentor allocation',
-                  'MVP building',
-                  'Validation workshops',
-                  'Entrepreneur keynote',
-                  'Final pitch to panel'
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg p-4">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0" />
-                    <span className="text-slate-200 text-sm font-medium">{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-12">
-                <button 
-                  onClick={() => setShowDifferent(!showDifferent)}
-                  className="flex items-center gap-2 text-gold-400 font-bold uppercase tracking-wider text-sm hover:text-gold-300 transition-colors"
-                >
-                  <ChevronRight className={`transition-transform duration-300 ${showDifferent ? 'rotate-90' : ''}`} size={18} />
-                  What Makes It Different?
-                </button>
-                <AnimatePresence>
-                  {showDifferent && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-6 pb-2 text-slate-400 text-base">
-                        Unlike conventional hackathons that focus purely on coding, Ennovate’X is a holistic business building experience. It forces you to think about customer acquisition, market sizing, revenue models, and the actual feasibility of your idea before you write a single line of code. It's not just about building a product; it's about building a company.
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
           </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {whyParticipate.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:border-gold-500/30 transition-colors"
+              >
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="text-gold-500 shrink-0 mt-0.5" size={18} />
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-200 mb-1">{item.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </Section>
 
       {/* Eligibility Section */}
-      <Section className="relative z-20 pt-12 pb-24">
+      <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
@@ -399,16 +329,16 @@ export default function EnnovateX() {
       </Section>
 
       {/* 3-Day Experience Timeline */}
-      <Section id="flow" className="relative z-20 pt-24 pb-32 border-t border-white/5">
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[1000px] h-[400px] md:h-[800px] bg-gold-500/5 ${isMobile ? 'blur-[80px]' : 'blur-[120px]'} pointer-events-none mix-blend-screen z-0`} />
+      <Section id="flow" className="relative z-20 pt-16 pb-16 border-t border-white/5">
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[1000px] h-[400px] md:h-[800px] bg-gold-500/5 ${isMobile ? 'blur-[40px]' : 'blur-[120px]'} pointer-events-none mix-blend-screen z-0`} />
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-16"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
               3-Day <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Experience</span>
@@ -423,7 +353,7 @@ export default function EnnovateX() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
-                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedDay === index ? 'bg-white/5 border-gold-500/40 shadow-[0_0_30px_rgba(212,175,55,0.1)]' : 'bg-black border-white/10 hover:border-white/20'}`}
+                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedDay === index ? `bg-white/5 border-gold-500/40 ${isMobile ? '' : 'shadow-[0_0_30px_rgba(212,175,55,0.1)]'}` : 'bg-black border-white/10 hover:border-white/20'}`}
               >
                 <button 
                   onClick={() => setExpandedDay(expandedDay === index ? null : index)}
@@ -447,10 +377,11 @@ export default function EnnovateX() {
                 <AnimatePresence>
                   {expandedDay === index && (
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
+                      initial={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
+                      animate={shouldAnimate ? { opacity: 1, height: 'auto' } : { opacity: 1, y: 0 }}
+                      exit={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className={shouldAnimate ? "overflow-hidden" : ""}
                     >
                       <div className="px-6 md:px-8 pb-8 pt-2">
                         <div className="pl-0 md:pl-18">
@@ -479,74 +410,8 @@ export default function EnnovateX() {
         </div>
       </Section>
 
-      {/* What Students Gain */}
-      <Section className="relative z-20 pt-24 pb-32 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
-              What You <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Gain</span> from Ennovate’X
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {gains.map((gain, index) => (
-              <motion.div
-                key={index}
-                initial={shouldAnimate ? { opacity: 0, y: 40, scale: 0.95 } : { opacity: 1, y: 0, scale: 1 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: shouldAnimate ? index * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-black border border-white/10 rounded-2xl p-6 hover:border-gold-500/40 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] hover:scale-[1.02] transition-all duration-300 group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 mb-6 group-hover:bg-gold-500/10 group-hover:text-gold-400 group-hover:border-gold-500/30 transition-all duration-300">
-                  <Zap size={20} />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-200 group-hover:text-white transition-colors">{gain}</h3>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* Why Ennovate'X Matters */}
-      <Section className="relative z-20 pt-24 pb-32 border-t border-white/5">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-black border border-white/10 rounded-3xl p-8 md:p-16 relative overflow-hidden"
-          >
-            <div className={`absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} rounded-full pointer-events-none`} />
-            
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
-              Why Ennovate’X Matters
-            </h2>
-            <p className="text-lg text-slate-400 font-light mb-10 max-w-3xl leading-relaxed">
-              Unlike conventional hackathons, Ennovate’X focuses on structured startup validation, mentorship integration, and real pitch preparedness.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {whyMatters.map((matter, i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <div className="w-2 h-2 bg-gold-500 rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]" />
-                  <span className="text-lg text-slate-200 font-medium">{matter}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
       {/* FAQ Section */}
-      <Section className="relative z-20 pt-24 pb-32 border-t border-white/5">
+      <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
@@ -582,10 +447,11 @@ export default function EnnovateX() {
                 <AnimatePresence>
                   {expandedFaq === index && (
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
+                      initial={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
+                      animate={shouldAnimate ? { opacity: 1, height: 'auto' } : { opacity: 1, y: 0 }}
+                      exit={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className={shouldAnimate ? "overflow-hidden" : ""}
                     >
                       <div className="p-6 pt-0 text-slate-400 text-base leading-relaxed">
                         {faq.a}
@@ -600,15 +466,15 @@ export default function EnnovateX() {
       </Section>
 
       {/* Registration CTA */}
-      <section id="register" className="py-32 relative overflow-hidden bg-black border-t border-white/5">
+      <section id="register" className="py-20 relative overflow-hidden bg-black border-t border-white/5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
         
         <motion.div 
-          initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
+          initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-12 md:p-16 bg-black shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-10 md:p-16 bg-black shadow-[0_0_50px_rgba(212,175,55,0.1)]"
         >
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 tracking-tight">
             Registrations Open

@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowRight, Lightbulb, ShieldCheck, Link as LinkIcon, Users, TrendingUp, Rocket, Zap } from 'lucide-react';
+import {
+  ArrowRight,
+  Lightbulb,
+  ShieldCheck,
+  Link as LinkIcon,
+  Users,
+  TrendingUp,
+  Rocket,
+  Zap
+} from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
@@ -22,34 +31,25 @@ const divisions = [
     desc: 'Fostering the culture of innovation and startup ecosystem among students and faculty.',
     icon: Lightbulb,
     color: 'from-blue-600 to-cyan-500',
-    bgLight: 'bg-blue-500/10',
     textPrimary: 'text-blue-400',
-    borderHover: 'hover:border-blue-500/50',
-    shadowHover: 'hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]'
   },
   {
     id: 'ipr',
     name: 'IPR',
     fullName: 'Intellectual Property Rights',
-    desc: 'Guiding and supporting the filing of patents, copyrights, and trademarks for novel ideas.',
+    desc: 'Guiding and supporting patent, copyright, and trademark filing.',
     icon: ShieldCheck,
     color: 'from-purple-600 to-pink-500',
-    bgLight: 'bg-purple-500/10',
     textPrimary: 'text-purple-400',
-    borderHover: 'hover:border-purple-500/50',
-    shadowHover: 'hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]'
   },
   {
     id: 'ciil',
     name: 'CIIL',
     fullName: 'Center for Innovation & Industry Linkage',
-    desc: 'Bridging the gap between academia and industry through collaborative projects.',
+    desc: 'Bridging academia and industry through collaboration.',
     icon: LinkIcon,
     color: 'from-emerald-600 to-teal-500',
-    bgLight: 'bg-emerald-500/10',
     textPrimary: 'text-emerald-400',
-    borderHover: 'hover:border-emerald-500/50',
-    shadowHover: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]'
   },
 ];
 
@@ -67,293 +67,180 @@ export default function Home() {
 
   useEffect(() => {
     if (location.hash) {
-      const targetId = location.hash.substring(1);
-      const element = document.getElementById(targetId);
+      const element = document.getElementById(location.hash.substring(1));
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        }, 80);
       }
     }
   }, [location]);
 
   const shouldAnimate = !prefersReducedMotion && !isMobile;
 
-  return (
-    <div className="overflow-hidden relative bg-navy-950">
-      {/* Global Gradient Background */}
-      {shouldAnimate ? (
-        <motion.div 
-          className="absolute inset-0 z-0 opacity-40 pointer-events-none"
-          animate={{
-            background: [
-              'radial-gradient(circle at 20% 30%, rgba(11,44,95,0.8) 0%, rgba(2,12,27,1) 50%)',
-              'radial-gradient(circle at 80% 70%, rgba(11,44,95,0.8) 0%, rgba(2,12,27,1) 50%)',
-              'radial-gradient(circle at 20% 30%, rgba(11,44,95,0.8) 0%, rgba(2,12,27,1) 50%)',
-            ]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        />
-      ) : (
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.8)_0%,rgba(2,12,27,1)_100%)] pointer-events-none opacity-40" />
-      )}
+  // Stable particle positions (no re-randomizing every render)
+  const particles = useMemo(() => {
+    return Array.from({ length: 12 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      duration: 10 + Math.random() * 6,
+      delay: Math.random() * 4,
+    }));
+  }, []);
 
-      {/* Global Floating Particles (Desktop Only) */}
+  return (
+    <div className="relative overflow-hidden bg-navy-950">
+
+      {/* Static Radial Background (No repaint animation) */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.8)_0%,rgba(2,12,27,1)_100%)] opacity-40 pointer-events-none" />
+
+      {/* Desktop Floating Dots */}
       {shouldAnimate && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {[...Array(12)].map((_, i) => (
+          {particles.map((dot, i) => (
             <motion.div
-              key={`dot-${i}`}
+              key={i}
               className="absolute w-1 h-1 bg-gold-400/15 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{ 
-                y: [0, -30, 0],
-                opacity: [0.1, 0.3, 0.1]
-              }}
-              transition={{ 
-                duration: 10 + Math.random() * 5, 
+              style={{ left: dot.left, top: dot.top }}
+              animate={{ y: [0, -30, 0] }}
+              transition={{
+                duration: dot.duration,
                 repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 5
+                ease: 'easeInOut',
+                delay: dot.delay,
               }}
             />
           ))}
         </div>
       )}
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 pb-24 md:pb-32 overflow-hidden">
-        
-        {/* Soft Radial Glows */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
-        {!isMobile && (
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen" />
-        )}
-        
-        {/* Tech Grid Overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvc3ZnPg==')] opacity-10 md:opacity-20 z-0 mix-blend-overlay" />
-        
-        {/* Faded Watermark Logo */}
-        {shouldAnimate ? (
-          <motion.div 
-            animate={{ y: [-10, 10, -10] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute right-[-5%] md:right-[5%] top-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-auto opacity-[0.02] md:opacity-[0.04] blur-[1px] z-0 pointer-events-none"
-          >
-            <img src="/bird.png" alt="" className="w-full h-auto object-contain" loading="lazy" />
-          </motion.div>
-        ) : (
-           <div className="absolute right-[-5%] md:right-[5%] top-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-auto opacity-[0.03] md:opacity-[0.05] blur-[1px] z-0 pointer-events-none">
-             <img src="/bird.png" alt="" className="w-full h-auto object-contain" loading="lazy" />
-           </div>
-        )}
+      {/* HERO SECTION */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 pb-24 overflow-hidden">
 
-        {/* PCCOE College Logo */}
-        <motion.div 
-          initial={shouldAnimate ? { opacity: 0, x: -15 } : { opacity: 1, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute top-24 md:top-32 left-4 md:left-12 lg:left-16 z-20 hidden sm:flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity duration-300"
-        >
-          <div className="flex items-center gap-2 bg-white/5 sm:backdrop-blur-md border border-white/10 p-1 pr-3 rounded-md shadow-sm">
-            <img 
-              src="/college.png" 
-              alt="PCCOE Logo" 
-              className="h-6 md:h-8 object-contain bg-white rounded-md p-1"
-              loading="lazy"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://picsum.photos/seed/pccoe/48/48';
-              }}
-            />
-            <div className="flex flex-col">
-              <span className="text-[8px] md:text-[10px] font-bold text-slate-300 tracking-wider uppercase leading-none">Pimpri Chinchwad</span>
-              <span className="text-[8px] md:text-[10px] text-slate-500 tracking-widest uppercase leading-none mt-0.5">College of Engineering</span>
-            </div>
-          </div>
-        </motion.div>
+        {/* Soft Glow */}
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[50px]' : 'blur-[100px]'} rounded-full pointer-events-none z-0`} />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center mt-10">
+        {/* Watermark Logo */}
+        {shouldAnimate && (
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, scale: 0.95, y: 10 } : { opacity: 1, scale: 1, y: 0 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 border border-white/10 sm:backdrop-blur-md mb-6 md:mb-8 shadow-sm"
+            animate={{ y: [-10, 10, -10] }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[300px] md:w-[700px] opacity-[0.04] pointer-events-none"
           >
-            <span className={`flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-gold-500 ${shouldAnimate ? 'animate-pulse' : ''}`} />
-            <span className="text-xs md:text-sm font-medium text-slate-300 tracking-wide uppercase">PCCOE Innovation Hub</span>
+            <img src="/bird.png" alt="" className="w-full object-contain" loading="lazy" />
           </motion.div>
+        )}
+
+        <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
 
           <motion.h1
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight text-white mb-6 md:mb-8 leading-[1.1]"
+            transition={{ duration: 0.8 }}
+            className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
           >
-            Engineering the Future of <br className="hidden md:block" />
-            <span className={`text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300 bg-300% ${shouldAnimate ? 'animate-gradient' : ''} drop-shadow-sm`}>Innovation.</span>
+            Engineering the Future of{' '}
+            <span className={`text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600 ${shouldAnimate ? 'bg-[length:200%_200%] animate-[gradientMove_8s_linear_infinite]' : ''}`}>
+              Innovation.
+            </span>
           </motion.h1>
 
           <motion.p
-            initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 max-w-3xl mx-auto mb-8 md:mb-12 leading-relaxed font-light px-4"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10"
           >
-            The central nervous system for research, technology, and entrepreneurship at PCCOE. We turn bold ideas into disruptive startups.
+            The central ecosystem for research, technology, and entrepreneurship at PCCOE.
           </motion.p>
 
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-col sm:flex-row justify-center gap-4"
           >
-            <Button href="/#divisions" size="lg" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
+            <Button href="/#divisions" size="lg" icon={<ArrowRight size={18} />}>
               Explore Divisions
             </Button>
-            <Button href="/contact" variant="glass" size="lg" className="w-full sm:w-auto">
+            <Button href="/contact" variant="glass" size="lg">
               Join Us
             </Button>
           </motion.div>
         </div>
-        
-        {/* Scroll indicator */}
-        {shouldAnimate && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400"
-          >
-            <span className="text-[10px] md:text-xs uppercase tracking-widest font-semibold">Scroll</span>
-            <div className="w-[1px] h-8 md:h-12 bg-gradient-to-b from-slate-400 to-transparent relative overflow-hidden">
-              <motion.div 
-                animate={{ y: [0, 48, 0] }}
-                transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-                className="absolute top-0 left-0 w-full h-1/2 bg-gold-500"
-              />
-            </div>
-          </motion.div>
-        )}
       </section>
 
-      {/* Stats Section */}
-      <Section className="relative z-20 pt-16 md:pt-32 pb-16 md:pb-32">
-        <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 relative z-10"
-        >
+      {/* STATS */}
+      <Section className="pt-16 pb-24 relative z-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat, index) => (
-            <div
+            <motion.div
               key={stat.label}
-              className="text-center group"
+              initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: shouldAnimate ? index * 0.1 : 0 }}
             >
-              <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 text-gold-400 mb-4 md:mb-6 group-hover:scale-105 group-hover:bg-white/10 group-hover:border-gold-500/30 transition-all duration-300 shadow-sm relative">
-                <div className="absolute inset-0 bg-gold-500/20 blur-lg md:blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <stat.icon className="w-6 h-6 md:w-8 h-8 relative z-10" />
+              <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gold-400">
+                <stat.icon className="w-6 h-6" />
               </div>
-              <div className="text-3xl md:text-5xl font-display font-bold text-white mb-1 md:mb-2 tracking-tight">
-                <AnimatedCounter value={stat.value} suffix={stat.suffix} isDecimal={stat.isDecimal} />
+              <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+                <AnimatedCounter
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  isDecimal={stat.isDecimal}
+                />
               </div>
-              <div className="text-[10px] md:text-sm font-medium text-slate-400 uppercase tracking-widest">{stat.label}</div>
-            </div>
+              <div className="text-xs md:text-sm text-slate-400 uppercase tracking-wider">
+                {stat.label}
+              </div>
+            </motion.div>
           ))}
-        </motion.div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
       </Section>
 
-      {/* Divisions Section */}
-      <Section id="divisions" className="relative overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
-        {/* Background decorative elements */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[300px] md:h-[500px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} pointer-events-none mix-blend-screen z-0`} />
-        
-        <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 md:mb-20 text-center relative z-10 px-4"
-        >
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 md:mb-6 drop-shadow-sm">
-            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Innovation</span> Engine
-          </h2>
-          <p className="text-base md:text-xl text-slate-300 max-w-3xl mx-auto font-light">
-            Three specialized divisions working in synergy to support the complete lifecycle of an idea—from conception to commercialization.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-10 relative z-10 px-4 md:px-0">
+      {/* DIVISIONS */}
+      <Section id="divisions" className="pt-16 pb-32 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {divisions.map((div, index) => (
             <motion.div
               key={div.id}
-              initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+              initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: shouldAnimate ? index * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
-              className="h-full"
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: shouldAnimate ? index * 0.1 : 0 }}
             >
-              <Card variant="glass-dark" className={`relative h-full p-6 md:p-8 group transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-md border border-white/10 hover:border-gold-500/30 overflow-hidden`}>
-                {/* Glow behind card content */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-gold-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                
-                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br ${div.color} flex items-center justify-center text-white mb-6 md:mb-10 shadow-sm group-hover:scale-105 transition-all duration-300`}>
-                  <div.icon className="w-8 h-8 md:w-10 md:h-10" />
+              <Card className="p-6 border border-white/10 hover:border-gold-500/30 transition-all duration-300">
+                <div className={`w-16 h-16 mb-6 rounded-xl bg-gradient-to-br ${div.color} flex items-center justify-center`}>
+                  <div.icon className="w-8 h-8 text-white" />
                 </div>
-                
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-2 md:mb-3">{div.name}</h3>
-                <h4 className={`text-xs md:text-sm font-bold uppercase tracking-wider ${div.textPrimary} mb-4 md:mb-8 h-auto md:h-10`}>{div.fullName}</h4>
-                <p className="text-slate-300 mb-6 md:mb-10 leading-relaxed text-base md:text-lg font-light">
-                  {div.desc}
-                </p>
-                
-                <div className="mt-auto pt-6 md:pt-8 border-t border-white/10">
-                  <Link
-                    to={`/divisions/${div.id}`}
-                    className={`inline-flex items-center gap-2 font-semibold text-slate-300 group-hover:${div.textPrimary} transition-colors text-base md:text-lg`}
-                  >
-                    Explore Division <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
+
+                <h3 className="text-2xl font-bold text-white mb-2">{div.name}</h3>
+                <h4 className={`${div.textPrimary} text-sm uppercase mb-4`}>
+                  {div.fullName}
+                </h4>
+                <p className="text-slate-300 mb-6">{div.desc}</p>
+
+                <Link
+                  to={`/divisions/${div.id}`}
+                  className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
+                >
+                  Explore Division <ArrowRight size={18} />
+                </Link>
               </Card>
             </motion.div>
           ))}
         </div>
       </Section>
 
-      {/* CTA Section */}
-      <section className="py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 rounded-full ${isMobile ? 'blur-[40px]' : 'blur-[80px]'} pointer-events-none mix-blend-screen`} />
-        
-        <motion.div 
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
-        >
-          <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-white/5 sm:backdrop-blur-md rounded-xl md:rounded-2xl border border-white/10 flex items-center justify-center text-white mb-6 md:mb-8 shadow-sm">
-            <Zap className="w-8 h-8 md:w-10 md:h-10 text-gold-400" />
-          </div>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 md:mb-8 tracking-tight">
-            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-gold-500">Build the Future?</span>
-          </h2>
-          <p className="text-lg md:text-2xl text-slate-300 mb-8 md:mb-12 max-w-2xl mx-auto font-light">
-            Join a community of builders, thinkers, and creators. Get access to mentorship, funding, and resources.
-          </p>
-          <div className="relative inline-block w-full sm:w-auto">
-            {shouldAnimate && <div className="absolute inset-0 bg-gold-500/20 blur-lg rounded-full animate-pulse hidden sm:block" />}
-            <Button href="/contact" size="lg" icon={<ArrowRight size={18} />} className="relative text-base md:text-lg px-8 md:px-10 py-4 md:py-5 w-full sm:w-auto justify-center">
-              Apply to Incubator
-            </Button>
-          </div>
-        </motion.div>
+      {/* CTA */}
+      <section className="py-24 text-center relative z-10">
+        <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          Ready to Build the Future?
+        </h2>
+        <Button href="/contact" size="lg" icon={<ArrowRight size={18} />}>
+          Apply to Incubator
+        </Button>
       </section>
     </div>
   );
