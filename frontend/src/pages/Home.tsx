@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Lightbulb, ShieldCheck, Link as LinkIcon, Calendar, Users, TrendingUp, ChevronRight, Rocket, Zap, Globe } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowRight, Lightbulb, ShieldCheck, Link as LinkIcon, Users, TrendingUp, Rocket, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-import { Section, SectionHeader } from '../components/ui/Section';
+import { Section } from '../components/ui/Section';
 import { AnimatedCounter } from '../components/ui/AnimatedCounter';
-import { IEN_CORE_LEADERSHIP } from '../constants/teamData';
 
 const stats = [
   { label: 'Active Innovators', value: 1.2, suffix: 'k+', isDecimal: true, icon: Users },
@@ -89,24 +88,23 @@ export default function Home() {
       {/* Global Floating Particles (Desktop Only) */}
       {shouldAnimate && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={`dot-${i}`}
-              className="absolute w-1 h-1 bg-gold-400/20 rounded-full"
+              className="absolute w-1 h-1 bg-gold-400/15 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}
               animate={{ 
-                y: [0, -40, 0],
-                x: [0, 20, 0],
-                opacity: [0.1, 0.4, 0.1]
+                y: [0, -30, 0],
+                opacity: [0.1, 0.3, 0.1]
               }}
               transition={{ 
-                duration: 8 + Math.random() * 8, 
+                duration: 10 + Math.random() * 5, 
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: Math.random() * 4
+                delay: Math.random() * 5
               }}
             />
           ))}
@@ -117,9 +115,9 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center pt-20 pb-24 md:pb-32 overflow-hidden">
         
         {/* Soft Radial Glows */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[80px]' : 'blur-[120px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
         {!isMobile && (
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none z-0 mix-blend-screen" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen" />
         )}
         
         {/* Tech Grid Overlay */}
@@ -128,9 +126,9 @@ export default function Home() {
         {/* Faded Watermark Logo */}
         {shouldAnimate ? (
           <motion.div 
-            animate={{ y: [-15, 15, -15] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute right-[-5%] md:right-[5%] top-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-auto opacity-[0.03] md:opacity-[0.05] blur-[1px] z-0 pointer-events-none"
+            animate={{ y: [-10, 10, -10] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute right-[-5%] md:right-[5%] top-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-auto opacity-[0.02] md:opacity-[0.04] blur-[1px] z-0 pointer-events-none"
           >
             <img src="/bird.png" alt="" className="w-full h-auto object-contain" loading="lazy" />
           </motion.div>
@@ -200,11 +198,11 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
           >
-            <Button href="#divisions" size="lg" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
+            <Button href="/divisions" size="lg" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
               Explore Divisions
             </Button>
-            <Button href="/ciil/ennovatex" variant="glass" size="lg" className="w-full sm:w-auto">
-              ENNOVATE'X
+            <Button href="/contact" variant="glass" size="lg" className="w-full sm:w-auto">
+              Join Us
             </Button>
           </motion.div>
         </div>
@@ -260,7 +258,7 @@ export default function Home() {
       {/* Divisions Section */}
       <Section id="divisions" className="relative overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
         {/* Background decorative elements */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[300px] md:h-[500px] bg-gold-500/5 ${isMobile ? 'blur-[80px]' : 'blur-[120px]'} pointer-events-none mix-blend-screen z-0`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[300px] md:h-[500px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} pointer-events-none mix-blend-screen z-0`} />
         
         <motion.div
           initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
@@ -315,68 +313,10 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Team Section */}
-      <Section className="relative overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.1)_0%,transparent_70%)] pointer-events-none" />
-        {!isMobile && (
-          <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-gold-500/5 blur-[120px] rounded-full pointer-events-none mix-blend-screen" />
-        )}
-        
-        <motion.div 
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-4 md:gap-6 relative z-10 px-4 md:px-0"
-        >
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4 md:mb-6 drop-shadow-sm">
-              <span className="text-white">Core</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Leadership</span>
-            </h2>
-            <p className="text-base md:text-xl text-slate-300 font-light">
-              The governing body driving innovation and entrepreneurship at PCCOE.
-            </p>
-          </div>
-          <div className="flex">
-            <Button href="/team" variant="glass" icon={<ChevronRight size={18} />} className="w-full md:w-auto justify-center">
-              View Full Leadership
-            </Button>
-          </div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10 px-4 md:px-0">
-          {IEN_CORE_LEADERSHIP.slice(0, 3).map((member, index) => (
-            <motion.div
-              key={member.name}
-              initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: shouldAnimate ? index * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Card variant="tech" className="group h-full p-6 md:p-8 hover:-translate-y-1 md:hover:-translate-y-2 transition-all duration-300 hover:shadow-md border border-white/5 hover:border-gold-500/20">
-                <div className="flex flex-col h-full">
-                  <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-1 md:mb-2 group-hover:text-gold-400 transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                  <p className="text-gold-500 font-medium text-xs md:text-sm mb-3 md:mb-4 uppercase tracking-wider">
-                    {member.role}
-                  </p>
-                  <div className="mt-auto pt-3 md:pt-4 border-t border-white/5">
-                    <p className="text-slate-400 text-[10px] md:text-xs uppercase tracking-widest font-bold">
-                      {member.designation}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
       {/* CTA Section */}
       <section className="py-20 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 rounded-full ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} pointer-events-none mix-blend-screen`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 rounded-full ${isMobile ? 'blur-[40px]' : 'blur-[80px]'} pointer-events-none mix-blend-screen`} />
         
         <motion.div 
           initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
