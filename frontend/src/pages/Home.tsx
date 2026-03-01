@@ -23,7 +23,7 @@ export default function Home() {
     if (isMobile) return;
 
     const handleMove = (e: MouseEvent) => {
-      const move = (e.clientX / window.innerWidth - 0.5) * 30;
+      const move = (e.clientX / window.innerWidth - 0.5) * 40;
       setMouseX(move);
     };
 
@@ -34,25 +34,34 @@ export default function Home() {
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
 
+      {/* ===== Animated Background Gradient (Lightweight) ===== */}
+      {!isMobile && (
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(270deg,#0f172a,#0b1c35,#0f172a)] bg-[length:400%_400%] animate-[gradientMove_18s_ease_infinite]" />
+      )}
+
       {/* ================= HERO SECTION ================= */}
       <section className="relative min-h-screen flex items-center justify-center pt-24 pb-24 overflow-hidden">
 
-        {/* Floating Background Logo (Desktop Only) */}
-        <motion.img
-          src="/bird.png"
-          alt=""
-          style={!isMobile ? { x: mouseX } : undefined}
-          animate={!isMobile && !shouldReduceMotion ? { scale: [1, 1.05, 1] } : undefined}
-          transition={
-            !isMobile && !shouldReduceMotion
-              ? { duration: 12, repeat: Infinity, ease: "easeInOut" }
-              : undefined
-          }
-          className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] opacity-10 hidden md:block pointer-events-none"
-        />
+        {/* Floating Background Logo */}
+        {!isMobile && (
+          <motion.img
+            src="/bird.png"
+            alt=""
+            style={{ x: mouseX }}
+            animate={!shouldReduceMotion ? { y: [-10, 10, -10] } : undefined}
+            transition={
+              !shouldReduceMotion
+                ? { duration: 10, repeat: Infinity, ease: "easeInOut" }
+                : undefined
+            }
+            className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[650px] opacity-10 pointer-events-none"
+          />
+        )}
 
-        {/* Soft Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-navy-900/30 to-navy-950 pointer-events-none" />
+        {/* Soft Glow */}
+        {!isMobile && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-500/10 blur-[80px] rounded-full pointer-events-none -z-10" />
+        )}
 
         <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
 
@@ -100,7 +109,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col sm:flex-row justify-center gap-4"
           >
-            <Button href="#divisions" size="lg" icon={<ArrowRight size={18} />}>
+            <Button href="/divisions" size="lg" icon={<ArrowRight size={18} />}>
               Explore Divisions
             </Button>
             <Button href="/contact" variant="glass" size="lg">
