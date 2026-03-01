@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Lightbulb, ShieldCheck, Link as LinkIcon, Users, TrendingUp, Rocket, Zap } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -58,6 +58,17 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
+  const dots = useMemo(() => {
+    return [...Array(18)].map((_, i) => ({
+      id: i,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      duration: 10 + Math.random() * 8,
+      delay: Math.random() * 5,
+      opacity: 0.15 + Math.random() * 0.2,
+    }));
+  }, []);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -81,43 +92,30 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden relative bg-navy-950">
-      {/* Global Gradient Background */}
-      {shouldAnimate ? (
-        <motion.div 
-          className="absolute inset-0 z-0 opacity-40 pointer-events-none"
-          animate={{
-            background: [
-              'radial-gradient(circle at 20% 30%, rgba(11,44,95,0.8) 0%, rgba(2,12,27,1) 50%)',
-              'radial-gradient(circle at 80% 70%, rgba(11,44,95,0.8) 0%, rgba(2,12,27,1) 50%)',
-              'radial-gradient(circle at 20% 30%, rgba(11,44,95,0.8) 0%, rgba(2,12,27,1) 50%)',
-            ]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        />
-      ) : (
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.8)_0%,rgba(2,12,27,1)_100%)] pointer-events-none opacity-40" />
-      )}
+      {/* Global Static Gradient Background */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.8)_0%,rgba(2,12,27,1)_100%)] pointer-events-none opacity-40" />
 
-      {/* Global Floating Particles (Desktop Only) */}
+      {/* Global Floating Dots (Desktop Only) */}
       {shouldAnimate && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {[...Array(12)].map((_, i) => (
+          {dots.map((dot) => (
             <motion.div
-              key={`dot-${i}`}
-              className="absolute w-1 h-1 bg-gold-400/15 rounded-full"
+              key={dot.id}
+              className="absolute w-[1.5px] h-[1.5px] bg-gold-400 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                top: dot.top,
+                left: dot.left,
+                opacity: dot.opacity,
               }}
               animate={{ 
-                y: [0, -30, 0],
-                opacity: [0.1, 0.3, 0.1]
+                y: [0, -40, 0],
+                opacity: [dot.opacity, dot.opacity * 2, dot.opacity]
               }}
               transition={{ 
-                duration: 10 + Math.random() * 5, 
+                duration: dot.duration, 
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: Math.random() * 5
+                delay: dot.delay
               }}
             />
           ))}
