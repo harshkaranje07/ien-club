@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Lightbulb, ShieldCheck, Link as LinkIcon, Users, TrendingUp, Rocket, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Section } from '../components/ui/Section';
@@ -56,6 +56,7 @@ const divisions = [
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -63,6 +64,18 @@ export default function Home() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (location.hash) {
+      const targetId = location.hash.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   const shouldAnimate = !prefersReducedMotion && !isMobile;
 
@@ -198,7 +211,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
           >
-            <Button href="/divisions" size="lg" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
+            <Button href="/#divisions" size="lg" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
               Explore Divisions
             </Button>
             <Button href="/contact" variant="glass" size="lg" className="w-full sm:w-auto">

@@ -48,6 +48,27 @@ export function Button({
   );
 
   if (href) {
+    if (href.startsWith('/#')) {
+      return (
+        <Link 
+          to={href} 
+          className={combinedClassName}
+          onClick={(e) => {
+            if (window.location.pathname === '/') {
+              e.preventDefault();
+              const targetId = href.substring(2);
+              const element = document.getElementById(targetId);
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                window.history.pushState(null, '', href);
+              }
+            }
+          }}
+        >
+          {content}
+        </Link>
+      );
+    }
     if (href.startsWith('#')) {
       return (
         <a 
@@ -55,9 +76,11 @@ export function Button({
           className={combinedClassName}
           onClick={(e) => {
             e.preventDefault();
-            const element = document.querySelector(href);
+            const targetId = href.substring(1);
+            const element = document.getElementById(targetId);
             if (element) {
               element.scrollIntoView({ behavior: 'smooth' });
+              window.history.pushState(null, '', href);
             }
           }}
         >
