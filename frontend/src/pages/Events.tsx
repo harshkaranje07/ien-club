@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export function BackgroundLayer() {
   const prefersReducedMotion = useReducedMotion();

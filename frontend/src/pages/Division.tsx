@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, Calendar, Users, Target, Zap, CheckCircle2 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 
