@@ -74,8 +74,8 @@ export function Footer() {
             <span>Developed by <span className="text-gold-400 font-medium">Harshwardhan Karanje</span></span>
           </div>
           <div className="flex gap-6">
-            <Link to="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="#" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@
 
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ScrollToTop } from './components/layout/ScrollToTop';
 import { Layout } from './components/layout/Layout';
 import Home from './pages/Home';
 
@@ -16,6 +17,8 @@ const Placeholder = lazy(() => import('./pages/Placeholder'));
 const Team = lazy(() => import('./pages/Team'));
 const About = lazy(() => import('./pages/About'));
 const Events = lazy(() => import('./pages/Events'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const IICPage = lazy(() => import('./pages/divisions/IICPage'));
 const IPRPage = lazy(() => import('./pages/divisions/IPRPage'));
 const CIILPage = lazy(() => import('./pages/divisions/CIILPage'));
@@ -29,6 +32,7 @@ const PageLoader = () => (
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -44,6 +48,8 @@ export default function App() {
             <Route path="gallery" element={<Placeholder />} />
             <Route path="team" element={<Team />} />
             <Route path="contact" element={<Placeholder />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<TermsOfService />} />
           </Route>
           <Route path="/exams" element={<ExamsPortal />} />
         </Routes>

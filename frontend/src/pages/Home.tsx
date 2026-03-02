@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Section } from '../components/ui/Section';
 import { AnimatedCounter } from '../components/ui/AnimatedCounter';
+import { BackgroundDots } from '../components/ui/BackgroundDots';
 
 const stats = [
   { label: 'Active Innovators', value: 1.2, suffix: 'k+', isDecimal: true, icon: Users },
@@ -58,17 +59,6 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
-  const dots = useMemo(() => {
-    return [...Array(18)].map((_, i) => ({
-      id: i,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      duration: 10 + Math.random() * 8,
-      delay: Math.random() * 5,
-      opacity: 0.15 + Math.random() * 0.2,
-    }));
-  }, []);
-
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -95,32 +85,8 @@ export default function Home() {
       {/* Global Static Gradient Background */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.8)_0%,rgba(2,12,27,1)_100%)] pointer-events-none opacity-40" />
 
-      {/* Global Floating Dots (Desktop Only) */}
-      {shouldAnimate && (
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          {dots.map((dot) => (
-            <motion.div
-              key={dot.id}
-              className="absolute w-[1.5px] h-[1.5px] bg-gold-400 rounded-full"
-              style={{
-                top: dot.top,
-                left: dot.left,
-                opacity: dot.opacity,
-              }}
-              animate={{ 
-                y: [0, -40, 0],
-                opacity: [dot.opacity, dot.opacity * 2, dot.opacity]
-              }}
-              transition={{ 
-                duration: dot.duration, 
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: dot.delay
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {/* Global Floating Dots */}
+      <BackgroundDots />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 pb-24 md:pb-32 overflow-hidden">
