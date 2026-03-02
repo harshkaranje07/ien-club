@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { useState, useEffect, useMemo } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function BackgroundDots() {
   const prefersReducedMotion = useReducedMotion();
@@ -8,29 +8,28 @@ export function BackgroundDots() {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // 🚫 Completely disable on mobile or reduced motion
+  if (isMobile || prefersReducedMotion) return null;
+
+  // Generate dots only once
   const dots = useMemo(() => {
-    // Increase number of background dots moderately (around 15–25 max) on desktop
-    const count = 18 + Math.floor(Math.random() * 8);
-    return [...Array(count)].map((_, i) => ({
+    const count = 20; // Stable count (not random every render)
+
+    return Array.from({ length: count }).map((_, i) => ({
       id: i,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      duration: 12 + Math.random() * 10, // 12-22s (even slower)
+      top: `${Math.random() * 95}%`,
+      left: `${Math.random() * 95}%`,
+      duration: 14 + Math.random() * 8, // 14–22s slow movement
       delay: Math.random() * 5,
-      opacity: 0.08 + Math.random() * 0.07, // Even more subtle visibility
-      size: Math.random() > 0.5 ? 'w-1 h-1' : 'w-1.5 h-1.5', // Smaller dots
-      color: Math.random() > 0.5 ? 'bg-gold-400/20' : 'bg-white/10',
+      size: Math.random() > 0.5 ? "w-2 h-2" : "w-2.5 h-2.5",
+      color: Math.random() > 0.5 ? "bg-gold-400" : "bg-white",
+      opacity: 0.25 + Math.random() * 0.15, // 0.25–0.40
     }));
   }, []);
-
-  // Completely disable on mobile or if reduced motion is preferred
-  if (isMobile || prefersReducedMotion) {
-    return null;
-  }
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
@@ -43,15 +42,14 @@ export function BackgroundDots() {
             left: dot.left,
             opacity: dot.opacity,
           }}
-          animate={{ 
-            y: [0, -40, 0],
-            opacity: [dot.opacity, dot.opacity * 1.5, dot.opacity]
+          animate={{
+            y: [0, -20, 0],
           }}
-          transition={{ 
-            duration: dot.duration, 
+          transition={{
+            duration: dot.duration,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: dot.delay
+            delay: dot.delay,
           }}
         />
       ))}
