@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Card } from '../components/ui/Card';
-import { Lightbulb, ShieldCheck, Rocket, Building2, ArrowRight } from 'lucide-react';
+import { Lightbulb, ShieldCheck, Rocket, Building2, ArrowRight, Quote } from 'lucide-react';
 
 const TIMELINE_STEPS = [
   {
@@ -41,93 +42,141 @@ const TIMELINE_STEPS = [
 ];
 
 export default function About() {
+  const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const shouldAnimate = !prefersReducedMotion && !isMobile;
+
   return (
     <div className="min-h-screen bg-navy-950 pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
       {/* Premium Background Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] md:h-[500px] bg-gradient-to-b from-gold-900/10 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] md:h-[500px] bg-gradient-to-b from-navy-900/50 to-transparent pointer-events-none z-0" />
+      
+      {/* Subtle Accent Glow */}
+      {!isMobile && (
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gold-500/5 rounded-full blur-[80px] pointer-events-none z-0 mix-blend-screen" />
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Hero Section */}
         <motion.div 
-          initial={{ opacity: 0, y: -15 }}
+          initial={shouldAnimate ? { opacity: 0, y: -10 } : { opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16 md:mb-20"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-16 md:mb-24"
         >
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 md:mb-4 tracking-tight uppercase">
-            About IEN
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 md:mb-6 tracking-tight">
+            Our <span className="text-gold-400">Journey</span>
           </h1>
-          <div className="w-16 md:w-24 h-1 bg-gold-500 mx-auto mb-4 md:mb-6" />
-          <p className="text-slate-400 text-base md:text-lg max-w-3xl mx-auto font-light leading-relaxed px-4">
-            The Innovation and Entrepreneurship Network (IEN) is the umbrella body at PCCOE, orchestrating a seamless ecosystem for innovation, intellectual property, and startup incubation.
+          <div className="w-12 md:w-16 h-1 bg-gold-500/50 mx-auto mb-6 md:mb-8 rounded-full" />
+          <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto font-light leading-relaxed px-4">
+            We believe that true innovation is born from late nights, relentless trial and error, and a community that refuses to settle for the ordinary.
           </p>
         </motion.div>
 
-        {/* What is IEN? */}
+        {/* The Story Section */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 md:mb-24"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-20 md:mb-32"
         >
-          <Card variant="glass-dark" className="p-6 md:p-12 border-white/10 bg-white/5 sm:backdrop-blur-md">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 md:mb-6 uppercase tracking-wider flex items-center">
-              <span className="w-6 md:w-8 h-1 bg-gold-500 mr-3 md:mr-4"></span>
-              What is IEN?
-            </h2>
-            <div className="space-y-4 md:space-y-6 text-slate-300 font-light leading-relaxed text-base md:text-lg">
-              <p>
-                The Innovation and Entrepreneurship Network (IEN) represents the strategic vision of Pimpri Chinchwad College of Engineering (PCCOE) to cultivate a robust, self-sustaining ecosystem of technological advancement and entrepreneurial success.
-              </p>
-              <p>
-                As an overarching institutional framework, IEN integrates the efforts of three specialized divisions: the Institution's Innovation Council (IIC), the Intellectual Property Rights (IPR) Cell, and the Center for Innovation, Incubation and Linkages (CIIL). Together, they provide a comprehensive support structure that guides students and faculty from the inception of an idea to the establishment of a commercial enterprise.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-center">
+            
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-6 md:space-y-8">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-white tracking-tight">
+                Building the Ecosystem
+              </h2>
+              
+              <div className="space-y-4 text-slate-300 font-light leading-relaxed text-base md:text-lg">
+                <p>
+                  The Innovation and Entrepreneurship Network (IEN) wasn't built overnight. It is the result of countless students and faculty members dedicating their time, energy, and passion to solving real-world problems.
+                </p>
+                <p>
+                  We understand that the path from a raw idea to a successful startup is rarely a straight line. It requires mentorship, resources, and, most importantly, a culture that embraces failure as a stepping stone to success.
+                </p>
+                <p>
+                  By integrating the Institution's Innovation Council (IIC), the Intellectual Property Rights (IPR) Cell, and the Center for Innovation, Incubation and Linkages (CIIL), we've created a seamless pipeline. We provide the structure so our innovators can focus on what they do best: building the future.
+                </p>
+              </div>
             </div>
-          </Card>
+
+            {/* Right Pull Quote */}
+            <div className="lg:col-span-5">
+              <Card variant="glass-dark" className="p-8 md:p-10 border-white/5 bg-white/[0.02] relative overflow-hidden shadow-sm">
+                <Quote className="absolute top-4 right-4 w-12 h-12 text-gold-500/10 rotate-180" />
+                <div className="relative z-10">
+                  <p className="text-xl md:text-2xl font-display font-medium text-white leading-snug mb-6">
+                    "Innovation isn't just about the final product. It's about the grit, the late-night prototypes, and the courage to build something new."
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-[1px] bg-gold-500/50" />
+                    <span className="text-sm font-bold text-gold-400 uppercase tracking-widest">IEN Leadership</span>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+          </div>
         </motion.div>
+
+        {/* Subtle Divider */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-20 md:mb-32" />
 
         {/* How They Work Together */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 md:mb-24"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-20 md:mb-32"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-8 md:mb-12 text-center uppercase tracking-wider">
-            The Innovation Ecosystem
-          </h2>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 tracking-tight">
+              The Innovation Pipeline
+            </h2>
+            <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto font-light">
+              A structured approach to turning raw potential into market-ready ventures.
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <Card variant="tech" className="p-6 md:p-8 border-gold-500/20 bg-navy-900/50 hover:scale-[1.02] transition-transform duration-300">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 md:mb-6">
-                <Lightbulb className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
+            <Card variant="glass-dark" className="p-8 border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors duration-300 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 border border-blue-500/20">
+                <Lightbulb className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">1. Ideation (IIC)</h3>
+              <h3 className="text-xl font-bold text-white mb-3">1. Ideation (IIC)</h3>
               <p className="text-slate-400 text-sm md:text-base font-light leading-relaxed">
-                The IIC acts as the catalyst, fostering a culture of innovation through hackathons, workshops, and mentorship. It helps innovators refine their ideas and build initial prototypes.
+                Fostering a culture of innovation through hackathons, workshops, and mentorship. We help innovators refine their ideas and build initial prototypes.
               </p>
             </Card>
 
-            <Card variant="tech" className="p-6 md:p-8 border-gold-500/20 bg-navy-900/50 hover:scale-[1.02] transition-transform duration-300">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 md:mb-6">
-                <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" />
+            <Card variant="glass-dark" className="p-8 border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors duration-300 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-6 border border-emerald-500/20">
+                <ShieldCheck className="w-6 h-6 text-emerald-400" />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">2. Protection (IPR)</h3>
+              <h3 className="text-xl font-bold text-white mb-3">2. Protection (IPR)</h3>
               <p className="text-slate-400 text-sm md:text-base font-light leading-relaxed">
-                Once a prototype shows promise, the IPR Cell steps in to legally safeguard the innovation, assisting with patent searches, drafting, and filing to ensure intellectual assets are protected.
+                Securing intellectual property rights. We assist with patent searches, drafting, and filing to ensure your hard work is legally protected.
               </p>
             </Card>
 
-            <Card variant="tech" className="p-6 md:p-8 border-gold-500/20 bg-navy-900/50 hover:scale-[1.02] transition-transform duration-300">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 md:mb-6">
-                <Rocket className="w-5 h-5 md:w-6 md:h-6 text-purple-400" />
+            <Card variant="glass-dark" className="p-8 border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors duration-300 shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 border border-purple-500/20">
+                <Rocket className="w-6 h-6 text-purple-400" />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">3. Incubation (CIIL)</h3>
+              <h3 className="text-xl font-bold text-white mb-3">3. Incubation (CIIL)</h3>
               <p className="text-slate-400 text-sm md:text-base font-light leading-relaxed">
-                Protected innovations are then transitioned to CIIL, where they receive pre-incubation and incubation support, industry linkages, and access to funding to launch as successful startups.
+                Transforming prototypes into viable startups. We provide pre-incubation support, industry linkages, and access to funding.
               </p>
             </Card>
           </div>
@@ -135,34 +184,36 @@ export default function About() {
 
         {/* Innovation Lifecycle Timeline */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-10 md:mb-16 text-center uppercase tracking-wider">
-            Innovation Lifecycle
-          </h2>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-white tracking-tight">
+              The Journey
+            </h2>
+          </div>
 
           <div className="relative">
             {/* Connecting Line */}
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-amber-500/20 via-gold-500/50 to-gold-500/20 -translate-y-1/2 z-0" />
+            <div className="hidden lg:block absolute top-10 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent z-0" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-6 relative z-10">
               {TIMELINE_STEPS.map((step, index) => (
                 <div key={index} className="flex flex-col items-center text-center group">
-                  <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl ${step.bg} border border-white/10 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-105 transition-transform duration-300 shadow-sm sm:backdrop-blur-sm`}>
-                    <step.icon className={`w-6 h-6 md:w-8 md:h-8 ${step.color}`} />
+                  <div className={`w-20 h-20 rounded-2xl ${step.bg} border border-white/5 flex items-center justify-center mb-6 transition-transform duration-300 shadow-sm bg-navy-900/50`}>
+                    <step.icon className={`w-8 h-8 ${step.color}`} />
                   </div>
-                  <h4 className="text-base md:text-lg font-bold text-white mb-2 md:mb-3">{step.title}</h4>
-                  <p className="text-xs md:text-sm text-slate-400 font-light leading-relaxed px-2">
+                  <h4 className="text-lg font-bold text-white mb-2">{step.title}</h4>
+                  <p className="text-sm text-slate-400 font-light leading-relaxed px-2">
                     {step.description}
                   </p>
                   
                   {/* Mobile Arrow */}
                   {index < TIMELINE_STEPS.length - 1 && (
-                    <div className="lg:hidden my-4 md:my-6">
-                      <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-gold-500/50" />
+                    <div className="lg:hidden my-6">
+                      <ArrowRight className="w-5 h-5 text-white/10" />
                     </div>
                   )}
                 </div>
