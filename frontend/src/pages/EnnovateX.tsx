@@ -130,9 +130,9 @@ export default function EnnovateX() {
       )}
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-16">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-12 md:pt-20 pb-12 md:pb-16">
         {/* Spotlight Glow */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[40px]' : 'blur-[80px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[600px] h-[250px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[30px]' : 'blur-[80px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
         
         <motion.div 
           initial={shouldAnimate ? { opacity: 0 } : { opacity: 1 }}
@@ -141,9 +141,9 @@ export default function EnnovateX() {
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center"
         >
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            initial={shouldAnimate ? { opacity: 0, scale: 0.9 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center mb-8"
           >
             <span className="text-[10px] md:text-xs text-gold-500/80 uppercase tracking-[0.3em] font-bold mb-2">A Flagship Initiative of</span>
@@ -153,15 +153,15 @@ export default function EnnovateX() {
           </motion.div>
 
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-12 relative"
+            transition={isMobile ? { duration: 0.45, delay: 0.05, ease: "easeOut" } : { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-8 md:mb-12 relative"
           >
             <motion.h1 
               animate={shouldAnimate ? { y: [0, -5, 0] } : { y: 0 }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="text-6xl md:text-8xl lg:text-[9rem] font-display font-bold tracking-tighter mb-6 leading-[1] relative z-10 group"
+              className="text-5xl md:text-8xl lg:text-[9rem] font-display font-bold tracking-tighter mb-4 md:mb-6 relative z-10 group"
             >
               <span className="relative inline-block">
                 <span className="text-white tracking-wide drop-shadow-[0_2px_10px_rgba(255,255,255,0.1)]">ENNOVATE</span>
@@ -185,9 +185,9 @@ export default function EnnovateX() {
           </motion.div>
 
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.5, delay: 0.1, ease: "easeOut" } : { duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="relative mb-8 inline-block"
           >
             <p className="text-base md:text-lg text-gold-400 font-medium tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(212,175,55,0.2)]">
@@ -204,24 +204,24 @@ export default function EnnovateX() {
           </motion.div>
 
           <motion.p
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="text-lg md:text-xl text-[#d1d5db] max-w-2xl mx-auto mb-14 font-light leading-loose opacity-85"
+            transition={isMobile ? { duration: 0.5, delay: 0.15, ease: "easeOut" } : { duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="text-base md:text-xl text-[#d1d5db] max-w-2xl mx-auto mb-10 md:mb-14 font-light leading-relaxed md:leading-loose opacity-85"
           >
             A 3-Day Immersive Entrepreneurial Experience Designed to Transform Students into Startup Founders.
           </motion.p>
 
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-8"
+            transition={isMobile ? { duration: 0.5, delay: 0.2, ease: "easeOut" } : { duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 w-full sm:w-auto px-4"
           >
-            <Button href="#register" size="lg" className="bg-gradient-to-r from-yellow-400 to-gold-500 text-black border-none hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 font-bold px-10 py-4">
+            <Button href="#register" size="lg" className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-gold-500 text-black border-none hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 font-bold px-10 py-4">
               Register Now
             </Button>
-            <Button href="#flow" variant="glass" size="lg" className="bg-black/20 border-gold-500/30 text-gold-400 hover:bg-gold-500/10 hover:border-gold-500/50 transition-all duration-300 px-10 py-4">
+            <Button href="#flow" variant="glass" size="lg" className="w-full sm:w-auto bg-black/20 border-gold-500/30 text-gold-400 hover:bg-gold-500/10 hover:border-gold-500/50 transition-all duration-300 px-10 py-4">
               View Event Structure
             </Button>
           </motion.div>
@@ -251,10 +251,10 @@ export default function EnnovateX() {
       <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
@@ -266,10 +266,10 @@ export default function EnnovateX() {
             {whyParticipate.map((item, index) => (
               <motion.div
                 key={index}
-                initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
+                transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
                 className="bg-white/5 border border-white/10 rounded-xl p-5 hover:border-gold-500/30 transition-colors"
               >
                 <div className="flex items-start gap-3">
@@ -289,10 +289,10 @@ export default function EnnovateX() {
       <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.45, ease: "easeOut" } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="bg-black border border-gold-500/40 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(212,175,55,0.15)] relative overflow-hidden"
           >
             <div className={`absolute top-0 right-0 w-64 h-64 bg-gold-500/10 ${isMobile ? 'blur-[50px]' : 'blur-[80px]'} rounded-full pointer-events-none`} />
@@ -334,10 +334,10 @@ export default function EnnovateX() {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
@@ -349,10 +349,10 @@ export default function EnnovateX() {
             {eventFlow.map((day, index) => (
               <motion.div
                 key={day.day}
-                initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
+                transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
                 className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedDay === index ? `bg-white/5 border-gold-500/40 ${isMobile ? '' : 'shadow-[0_0_30px_rgba(212,175,55,0.1)]'}` : 'bg-black border-white/10 hover:border-white/20'}`}
               >
                 <button 
@@ -374,12 +374,12 @@ export default function EnnovateX() {
                   <ChevronDown className={`text-slate-400 transition-transform duration-300 ${expandedDay === index ? 'rotate-180 text-gold-400' : ''}`} size={24} />
                 </button>
 
-                <AnimatePresence>
+                <AnimatePresence initial={false}>
                   {expandedDay === index && (
                     <motion.div
-                      initial={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
-                      animate={shouldAnimate ? { opacity: 1, height: 'auto' } : { opacity: 1, y: 0 }}
-                      exit={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
+                      initial={shouldAnimate ? { opacity: 0, height: 0 } : undefined}
+                      animate={shouldAnimate ? { opacity: 1, height: 'auto' } : { opacity: 1 }}
+                      exit={shouldAnimate ? { opacity: 0, height: 0 } : undefined}
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       className={shouldAnimate ? "overflow-hidden" : ""}
                     >
@@ -414,10 +414,10 @@ export default function EnnovateX() {
       <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.45, ease: "easeOut" } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
@@ -429,10 +429,10 @@ export default function EnnovateX() {
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+                initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
+                transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
                 className="border border-white/10 rounded-xl bg-black overflow-hidden hover:border-white/20 transition-colors"
               >
                 <button 
@@ -444,12 +444,12 @@ export default function EnnovateX() {
                   </span>
                   <ChevronDown className={`text-slate-400 shrink-0 transition-transform duration-300 ${expandedFaq === index ? 'rotate-180 text-gold-400' : ''}`} size={20} />
                 </button>
-                <AnimatePresence>
+                <AnimatePresence initial={false}>
                   {expandedFaq === index && (
                     <motion.div
-                      initial={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
-                      animate={shouldAnimate ? { opacity: 1, height: 'auto' } : { opacity: 1, y: 0 }}
-                      exit={shouldAnimate ? { opacity: 0, height: 0 } : { opacity: 0, y: -10 }}
+                      initial={shouldAnimate ? { opacity: 0, height: 0 } : undefined}
+                      animate={shouldAnimate ? { opacity: 1, height: 'auto' } : { opacity: 1 }}
+                      exit={shouldAnimate ? { opacity: 0, height: 0 } : undefined}
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       className={shouldAnimate ? "overflow-hidden" : ""}
                     >
@@ -470,10 +470,10 @@ export default function EnnovateX() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
         
         <motion.div 
-          initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-10 md:p-16 bg-black shadow-[0_0_50px_rgba(212,175,55,0.1)]"
         >
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 tracking-tight">

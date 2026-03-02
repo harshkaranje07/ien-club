@@ -13,17 +13,17 @@ export function BackgroundDots() {
   }, []);
 
   const dots = useMemo(() => {
-    // Only 6-8 dots
-    const count = 6 + Math.floor(Math.random() * 3);
+    // Increase number of background dots moderately (around 15–25 max) on desktop
+    const count = 18 + Math.floor(Math.random() * 8);
     return [...Array(count)].map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
-      duration: 10 + Math.random() * 8, // 10-18s
+      duration: 12 + Math.random() * 10, // 12-22s (even slower)
       delay: Math.random() * 5,
-      opacity: 0.12 + Math.random() * 0.08, // Subtle visibility
-      size: Math.random() > 0.5 ? 'w-1.5 h-1.5' : 'w-2 h-2',
-      color: Math.random() > 0.5 ? 'bg-gold-400/30' : 'bg-white/15',
+      opacity: 0.08 + Math.random() * 0.07, // Even more subtle visibility
+      size: Math.random() > 0.5 ? 'w-1 h-1' : 'w-1.5 h-1.5', // Smaller dots
+      color: Math.random() > 0.5 ? 'bg-gold-400/20' : 'bg-white/10',
     }));
   }, []);
 

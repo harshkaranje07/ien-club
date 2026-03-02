@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'motion/react';
 import { ArrowLeft, Calendar, Users, Target, Zap, CheckCircle2 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 
@@ -71,6 +72,17 @@ const divisionsData = {
 
 export default function Division() {
   const { id } = useParams<{ id: string }>();
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const shouldAnimate = !prefersReducedMotion;
   
   // Type assertion since we know id will be one of the keys if routed correctly
   const data = divisionsData[id as keyof typeof divisionsData];
@@ -106,9 +118,9 @@ export default function Division() {
             <ArrowLeft size={16} /> Back to Home
           </Link>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={isMobile ? { opacity: 0, y: 15 } : shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.8, ease: "easeOut" }}
           >
             <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-bold tracking-wider mb-6 shadow-lg">
               {data.shortName}
@@ -127,10 +139,10 @@ export default function Division() {
           <div className="lg:col-span-2 space-y-16">
             {/* About */}
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-6">
                 <Target className={data.textPrimary} size={32} />
@@ -143,20 +155,20 @@ export default function Division() {
 
             {/* Objectives */}
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6 }}
             >
               <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-8">Key Objectives</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {data.objectives.map((obj, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={isMobile ? { duration: 0.4, delay: i * 0.05, ease: "easeOut" } : { delay: i * 0.1, duration: 0.5 }}
                   >
                     <Card variant="glass-dark" className="h-full p-6 hover:-translate-y-2 transition-transform duration-300">
                       <CheckCircle2 className={`${data.textPrimary} mb-4`} size={28} />
@@ -169,10 +181,10 @@ export default function Division() {
 
             {/* Activities */}
             <motion.section
-              initial={{ opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-8">
                 <Zap className={data.textPrimary} size={32} />
@@ -182,10 +194,10 @@ export default function Division() {
                 {data.activities.map((act, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={isMobile ? { opacity: 0, x: -12 } : shouldAnimate ? { opacity: 0, x: -20 } : { opacity: 1, x: 0 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={isMobile ? { duration: 0.4, delay: i * 0.05, ease: "easeOut" } : { delay: i * 0.1, duration: 0.5 }}
                   >
                     <Card variant="glass-dark" className="flex flex-col sm:flex-row gap-6 p-6 hover:-translate-y-2 transition-all duration-300 group">
                       <div className="sm:w-48 shrink-0">
@@ -209,9 +221,9 @@ export default function Division() {
             <div className="sticky top-32 space-y-8">
               {/* Quick Contact Card */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={isMobile ? { duration: 0.4, delay: 0.1, ease: "easeOut" } : { duration: 0.6, delay: 0.2 }}
               >
                 <Card variant="tech" className="p-8">
                   <h3 className="text-2xl font-display font-bold text-white mb-4">Connect with {data.shortName}</h3>
@@ -226,9 +238,9 @@ export default function Division() {
 
               {/* Stats/Info Card */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={isMobile ? { duration: 0.4, delay: 0.15, ease: "easeOut" } : { duration: 0.6, delay: 0.3 }}
               >
                 <Card variant="glass-dark" className="p-8">
                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-3">

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'motion/react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass';
@@ -21,14 +22,25 @@ export function Button({
   iconPosition = 'right',
   ...props
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center gap-2 font-medium transition-all duration-300 ease-out rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1";
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const baseStyles = "inline-flex items-center justify-center gap-2 font-medium transition-all duration-300 ease-out rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 disabled:opacity-50 disabled:cursor-not-allowed";
+  const hoverStyles = isMobile ? "" : "hover:-translate-y-1";
   
   const variants = {
-    primary: "bg-gradient-to-r from-gold-400 to-gold-600 text-navy-950 font-bold shadow-sm hover:shadow-md",
-    secondary: "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 shadow-sm",
-    outline: "border border-gold-500/50 text-gold-400 hover:border-gold-500 hover:text-navy-950 hover:bg-gold-500",
-    ghost: "text-slate-300 hover:text-gold-400 hover:bg-white/5",
-    glass: "bg-white/5 backdrop-blur-md border border-white/10 text-white hover:bg-white/10 shadow-sm hover:border-gold-500/30"
+    primary: `bg-gradient-to-r from-gold-400 to-gold-600 text-navy-950 font-bold shadow-sm ${isMobile ? '' : 'hover:shadow-md'}`,
+    secondary: `bg-white/10 backdrop-blur-md border border-white/20 text-white ${isMobile ? '' : 'hover:bg-white/20'} shadow-sm`,
+    outline: `border border-gold-500/50 text-gold-400 ${isMobile ? '' : 'hover:border-gold-500 hover:text-navy-950 hover:bg-gold-500'}`,
+    ghost: `text-slate-300 ${isMobile ? '' : 'hover:text-gold-400 hover:bg-white/5'}`,
+    glass: `bg-white/5 backdrop-blur-md border border-white/10 text-white ${isMobile ? '' : 'hover:bg-white/10'} shadow-sm ${isMobile ? '' : 'hover:border-gold-500/30'}`
   };
 
   const sizes = {
@@ -37,7 +49,7 @@ export function Button({
     lg: "px-8 py-4 text-lg font-semibold"
   };
 
-  const combinedClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+  const combinedClassName = `${baseStyles} ${hoverStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 
   const content = (
     <>
@@ -47,57 +59,83 @@ export function Button({
     </>
   );
 
+  const motionProps = isMobile ? {
+    whileTap: { scale: 0.97 } as const,
+    transition: { duration: 0.15 } as const
+  } : {};
+
   if (href) {
     if (href.startsWith('/#')) {
       return (
-        <Link 
-          to={href} 
-          className={combinedClassName}
-          onClick={(e) => {
-            if (window.location.pathname === '/') {
+        <motion.div {...motionProps} className="inline-block w-full sm:w-auto">
+          <Link 
+            to={href} 
+            className={combinedClassName}
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                const targetId = href.substring(2);
+                const element = document.getElementById(targetId);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                  window.history.pushState(null, '', href);
+                }
+              }
+            }}
+          >
+            {content}
+          </Link>
+        </motion.div>
+      );
+    }
+    if (href.startsWith('#')) {
+      return (
+        <motion.div {...motionProps} className="inline-block w-full sm:w-auto">
+          <a 
+            href={href} 
+            className={combinedClassName}
+            onClick={(e) => {
               e.preventDefault();
-              const targetId = href.substring(2);
+              const targetId = href.substring(1);
               const element = document.getElementById(targetId);
               if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
                 window.history.pushState(null, '', href);
               }
-            }
-          }}
-        >
-          {content}
-        </Link>
-      );
-    }
-    if (href.startsWith('#')) {
-      return (
-        <a 
-          href={href} 
-          className={combinedClassName}
-          onClick={(e) => {
-            e.preventDefault();
-            const targetId = href.substring(1);
-            const element = document.getElementById(targetId);
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth' });
-              window.history.pushState(null, '', href);
-            }
-          }}
-        >
-          {content}
-        </a>
+            }}
+          >
+            {content}
+          </a>
+        </motion.div>
       );
     }
     return (
-      <Link to={href} className={combinedClassName}>
-        {content}
-      </Link>
+      <motion.div {...motionProps} className="inline-block w-full sm:w-auto">
+        <Link to={href} className={combinedClassName}>
+          {content}
+        </Link>
+      </motion.div>
     );
   }
 
+  const { 
+    onAnimationStart, 
+    onAnimationEnd, 
+    onDrag, 
+    onDragEnd, 
+    onDragStart, 
+    style,
+    ...buttonProps 
+  } = props;
+
   return (
-    <button className={combinedClassName} {...props}>
+    <motion.button 
+      whileTap={isMobile ? { scale: 0.97 } : undefined}
+      transition={isMobile ? { duration: 0.15 } : undefined}
+      className={combinedClassName} 
+      {...buttonProps}
+    >
       {content}
-    </button>
+    </motion.button>
   );
 }

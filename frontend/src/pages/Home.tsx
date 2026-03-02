@@ -92,7 +92,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center pt-20 pb-24 md:pb-32 overflow-hidden">
         
         {/* Soft Radial Glows */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[30px]' : 'blur-[100px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
         {!isMobile && (
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none z-0 mix-blend-screen" />
         )}
@@ -110,7 +110,7 @@ export default function Home() {
             <img src="/bird.png" alt="" className="w-full h-auto object-contain" loading="lazy" />
           </motion.div>
         ) : (
-           <div className="absolute right-[-5%] md:right-[5%] top-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-auto opacity-[0.03] md:opacity-[0.05] blur-[1px] z-0 pointer-events-none">
+           <div className="absolute right-[-5%] md:right-[5%] top-1/2 -translate-y-1/2 w-[250px] md:w-[800px] h-auto opacity-[0.02] md:opacity-[0.05] blur-[1px] z-0 pointer-events-none">
              <img src="/bird.png" alt="" className="w-full h-auto object-contain" loading="lazy" />
            </div>
         )}
@@ -141,9 +141,9 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center mt-10">
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, scale: 0.95, y: 10 } : { opacity: 1, scale: 1, y: 0 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            initial={shouldAnimate ? { opacity: 0, scale: 0.95, y: 10 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, scale: 1, y: 0 }}
+            animate={{ opacity: 1, scale: isMobile ? 1 : 1, y: 0 }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 border border-white/10 sm:backdrop-blur-md mb-6 md:mb-8 shadow-sm"
           >
             <span className={`flex h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-gold-500 ${shouldAnimate ? 'animate-pulse' : ''}`} />
@@ -151,31 +151,31 @@ export default function Home() {
           </motion.div>
 
           <motion.h1
-            initial={shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 30 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight text-white mb-6 md:mb-8 leading-[1.1]"
+            transition={isMobile ? { duration: 0.45, delay: 0.05, ease: "easeOut" } : { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight text-white mb-6 md:mb-8 leading-[1.1]"
           >
             Engineering the Future of <br className="hidden md:block" />
-            <span className={`text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300 bg-300% ${shouldAnimate ? 'animate-gradient' : ''} drop-shadow-sm`}>Innovation.</span>
+            <span className={`text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300 bg-300% ${shouldAnimate ? 'animate-gradient' : 'from-gold-400 to-gold-500'} drop-shadow-sm`}>Innovation.</span>
           </motion.h1>
 
           <motion.p
-            initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.5, delay: 0.1, ease: "easeOut" } : { duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 max-w-3xl mx-auto mb-8 md:mb-12 leading-relaxed font-light px-4"
           >
             The central nervous system for research, technology, and entrepreneurship at PCCOE. We turn bold ideas into disruptive startups.
           </motion.p>
 
           <motion.div
-            initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : isMobile ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={isMobile ? { duration: 0.5, delay: 0.15, ease: "easeOut" } : { duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
           >
-            <Button href="/#divisions" size="lg" icon={<ArrowRight size={18} />} className="w-full sm:w-auto">
+            <Button href="/#divisions" size="lg" icon={!isMobile && <ArrowRight size={18} />} className="w-full sm:w-auto">
               Explore Divisions
             </Button>
             <Button href="/contact" variant="glass" size="lg" className="w-full sm:w-auto">
@@ -207,10 +207,10 @@ export default function Home() {
       {/* Stats Section */}
       <Section className="relative z-20 pt-16 md:pt-32 pb-16 md:pb-32">
         <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 relative z-10"
         >
           {stats.map((stat, index) => (
@@ -238,10 +238,10 @@ export default function Home() {
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[300px] md:h-[500px] bg-gold-500/5 ${isMobile ? 'blur-[60px]' : 'blur-[100px]'} pointer-events-none mix-blend-screen z-0`} />
         
         <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-20 text-center relative z-10 px-4"
         >
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 md:mb-6 drop-shadow-sm">
@@ -256,10 +256,10 @@ export default function Home() {
           {divisions.map((div, index) => (
             <motion.div
               key={div.id}
-              initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: shouldAnimate ? index * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
+              transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.6, delay: shouldAnimate ? index * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
               className="h-full"
             >
               <Card variant="glass-dark" className={`relative h-full p-6 md:p-8 group transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-md border border-white/10 hover:border-gold-500/30 overflow-hidden`}>
@@ -296,10 +296,10 @@ export default function Home() {
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold-500/5 rounded-full ${isMobile ? 'blur-[40px]' : 'blur-[80px]'} pointer-events-none mix-blend-screen`} />
         
         <motion.div 
-          initial={shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
         >
           <div className="w-16 h-16 md:w-20 md:h-20 mx-auto bg-white/5 sm:backdrop-blur-md rounded-xl md:rounded-2xl border border-white/10 flex items-center justify-center text-white mb-6 md:mb-8 shadow-sm">

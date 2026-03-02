@@ -69,9 +69,9 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Hero Section */}
         <motion.div 
-          initial={shouldAnimate ? { opacity: 0, y: -10 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 15 } : shouldAnimate ? { opacity: 0, y: -10 } : { opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: "easeOut" }}
           className="text-center mb-16 md:mb-24"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 md:mb-6 tracking-tight">
@@ -85,10 +85,10 @@ export default function About() {
 
         {/* The Story Section */}
         <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: "easeOut" }}
           className="mb-20 md:mb-32"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-center">
@@ -136,10 +136,10 @@ export default function About() {
 
         {/* How They Work Together */}
         <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: "easeOut" }}
           className="mb-20 md:mb-32"
         >
           <div className="text-center mb-12 md:mb-16">
@@ -186,10 +186,10 @@ export default function About() {
 
         {/* Innovation Lifecycle Timeline */}
         <motion.div
-          initial={shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: "easeOut" }}
         >
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-2xl md:text-3xl font-display font-bold text-white tracking-tight">

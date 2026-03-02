@@ -9,6 +9,14 @@ import { BackgroundDots } from '../components/ui/BackgroundDots';
 export default function Events() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const targetDate = new Date('2026-03-15T00:00:00');
@@ -43,16 +51,17 @@ export default function Events() {
       <Section className="relative z-20">
         <div className="text-center mb-16">
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6"
           >
             Upcoming <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Events</span>
           </motion.h1>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={isMobile ? { duration: 0.4, delay: 0.05, ease: "easeOut" } : { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-light"
           >
             Discover and participate in our latest innovation and entrepreneurship programs.
@@ -61,11 +70,11 @@ export default function Events() {
 
         <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={isMobile ? { duration: 0.4, delay: 0.1, ease: "easeOut" } : { duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Card variant="glass-dark" className="relative overflow-hidden group border-gold-500/30 hover:border-gold-500/60 transition-all duration-500 hover:shadow-[0_0_40px_rgba(212,175,55,0.15)] hover:-translate-y-1">
+            <Card variant="glass-dark" className={`relative overflow-hidden group border-gold-500/30 ${isMobile ? '' : 'hover:border-gold-500/60 hover:shadow-[0_0_40px_rgba(212,175,55,0.15)] hover:-translate-y-1'} transition-all duration-500`}>
               {/* Gold Badge */}
               <div className="absolute top-0 right-0 bg-gradient-to-r from-gold-600 to-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider py-1 px-4 rounded-bl-lg z-20 shadow-lg">
                 Upcoming

@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, Variants } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { motion, Variants, useReducedMotion } from 'motion/react';
 import { TeamMember } from '../../constants/teamData';
 import { Card } from '../ui/Card';
 import { BackgroundDots } from '../ui/BackgroundDots';
@@ -14,22 +14,34 @@ interface TeamPageLayoutProps {
 }
 
 export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtitle, description, members, highlightedMember, children }: TeamPageLayoutProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const shouldAnimate = !prefersReducedMotion;
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05
+        staggerChildren: isMobile ? 0.03 : 0.05
       }
     }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 10 },
+    hidden: { opacity: 0, y: isMobile ? 12 : 10 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: isMobile ? 0.4 : 0.4, ease: "easeOut" }
     }
   };
 
@@ -42,9 +54,9 @@ export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtit
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: -10 }}
+          initial={isMobile ? { opacity: 0, y: 15 } : shouldAnimate ? { opacity: 0, y: -10 } : { opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16 md:mb-24"
         >
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 tracking-tight">
@@ -73,13 +85,13 @@ export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtit
         {/* Highlighted Member (e.g., CEO for CIIL) */}
         {highlightedMember && (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.5, ease: "easeOut" }}
             className="mb-16 md:mb-24 flex justify-center"
           >
-            <Card variant="glass-dark" className="max-w-md w-full p-8 border-white/5 bg-white/[0.02] shadow-sm text-center relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 hover:border-gold-500/30">
+            <Card variant="glass-dark" className={`max-w-md w-full p-8 border-white/5 bg-white/[0.02] shadow-sm text-center relative overflow-hidden group ${isMobile ? '' : 'hover:-translate-y-1'} transition-all duration-300 hover:border-gold-500/30`}>
               {/* Subtle hover glow */}
               <div className="absolute inset-0 bg-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               {/* Top accent line */}
@@ -106,7 +118,7 @@ export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtit
         >
           {members.filter(m => !m.isHighlight).map((member, index) => (
             <motion.div key={`${member.name}-${index}`} variants={itemVariants}>
-              <Card variant="glass-dark" className="h-full p-6 md:p-8 border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-gold-500/30 transition-all duration-300 group shadow-sm relative overflow-hidden hover:-translate-y-1">
+              <Card variant="glass-dark" className={`h-full p-6 md:p-8 border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-gold-500/30 transition-all duration-300 group shadow-sm relative overflow-hidden ${isMobile ? '' : 'hover:-translate-y-1'}`}>
                 {/* Subtle hover glow */}
                 <div className="absolute inset-0 bg-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 {/* Left accent line */}
@@ -132,4 +144,5 @@ export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtit
       </div>
     </div>
   );
-});
+}
+);
