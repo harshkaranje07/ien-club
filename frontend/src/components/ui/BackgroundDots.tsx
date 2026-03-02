@@ -1,45 +1,31 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 export function BackgroundDots() {
   const prefersReducedMotion = useReducedMotion();
-  const [isDesktop, setIsDesktop] = useState(false);
 
-  useEffect(() => {
-    const checkScreen = () => {
-      if (typeof window !== "undefined") {
-        setIsDesktop(window.innerWidth >= 1024); // only laptop+
-      }
-    };
-
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
-
-  // Do not render anything on mobile or reduced motion
-  if (!isDesktop || prefersReducedMotion) return null;
+  if (prefersReducedMotion) return null;
 
   const dots = useMemo(() => {
-    const count = 18; // balanced professional density
+    const count = 16;
 
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
-      duration: 30 + Math.random() * 20, // ultra slow drift
+      duration: 35 + Math.random() * 15,
       delay: Math.random() * 10,
-      size: Math.random() > 0.5 ? 6 : 8, // px values
-      opacity: 0.12 + Math.random() * 0.08,
+      size: Math.random() > 0.5 ? 5 : 7,
+      opacity: 0.1 + Math.random() * 0.05,
     }));
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden hidden lg:block">
       {dots.map((dot) => (
         <motion.div
           key={dot.id}
-          className="absolute bg-white/60 rounded-full"
+          className="absolute bg-white rounded-full"
           style={{
             top: dot.top,
             left: dot.left,
