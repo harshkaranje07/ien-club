@@ -1,5 +1,5 @@
 import React from 'react';
-import { TeamPageLayout } from '../../components/team/TeamPageLayout';
+import TeamPageLayout from '../../components/team/TeamPageLayout';
 import { CIIL_TEAM } from '../../constants/teamData';
 import { motion } from 'framer-motion';
 import { Card } from '../../components/ui/Card';

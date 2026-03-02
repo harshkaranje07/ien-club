@@ -1,4 +1,4 @@
-import { TeamPageLayout } from '../components/team/TeamPageLayout';
+import TeamPageLayout from '../components/team/TeamPageLayout';
 import { IEN_CORE_LEADERSHIP } from '../constants/teamData';
 
 export default function Team() {
