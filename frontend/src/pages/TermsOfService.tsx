@@ -18,7 +18,7 @@ export default function TermsOfService() {
       {/* Subtle background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-gold-500/5 to-transparent pointer-events-none z-0" />
       
-      <div className="max-w-4xl mx-auto pxx-6 relative z-10">
+      <div className="max-w-4xl mx-auto px-6 relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"

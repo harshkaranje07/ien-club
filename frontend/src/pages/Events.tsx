@@ -4,6 +4,7 @@ import { Calendar, MapPin, Clock, ArrowRight, CheckCircle2, XCircle } from 'luci
 import { Card } from '../components/ui/Card';
 import { Section } from '../components/ui/Section';
 import { Button } from '../components/ui/Button';
+import { BackgroundDots } from '../components/ui/BackgroundDots';
 
 export default function Events() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -37,8 +38,9 @@ export default function Events() {
   }, []);
 
   return (
-    <div className="pt-24 pb-32 min-h-screen bg-navy-950">
-      <Section className="relative z-10">
+    <div className="pt-24 pb-32 min-h-screen bg-navy-950 relative overflow-hidden">
+      <BackgroundDots />
+      <Section className="relative z-20">
         <div className="text-center mb-16">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}

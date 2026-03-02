@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, Variants } from 'motion/react';
 import { TeamMember } from '../../constants/teamData';
 import { Card } from '../ui/Card';
+import { BackgroundDots } from '../ui/BackgroundDots';
 
 interface TeamPageLayoutProps {
   title: string;
@@ -34,10 +35,11 @@ export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtit
 
   return (
     <div className="min-h-screen bg-navy-950 pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
+      <BackgroundDots />
       {/* Premium Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] md:h-[500px] bg-gradient-to-b from-navy-900/50 to-transparent pointer-events-none z-0" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: -10 }}

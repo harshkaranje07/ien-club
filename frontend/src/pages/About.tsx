@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Card } from '../components/ui/Card';
+import { BackgroundDots } from '../components/ui/BackgroundDots';
 import { Lightbulb, ShieldCheck, Rocket, Building2, ArrowRight, Quote } from 'lucide-react';
 
 const TIMELINE_STEPS = [
@@ -56,6 +57,7 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-navy-950 pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
+      <BackgroundDots />
       {/* Premium Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] md:h-[500px] bg-gradient-to-b from-navy-900/50 to-transparent pointer-events-none z-0" />
       
@@ -64,7 +66,7 @@ export default function About() {
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-gold-500/5 rounded-full blur-[80px] pointer-events-none z-0 mix-blend-screen" />
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Hero Section */}
         <motion.div 
           initial={shouldAnimate ? { opacity: 0, y: -10 } : { opacity: 1, y: 0 }}
