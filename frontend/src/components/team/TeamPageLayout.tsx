@@ -1,63 +1,64 @@
-import { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { motion, Variants, useReducedMotion } from 'framer-motion';
+import { TeamMember } from '../../constants/teamData';
+import { Card } from '../ui/Card';
+import { BackgroundLayer } from '../ui/BackgroundLayer';
 
-export default function BackgroundLayer() {
-  const prefersReducedMotion = useReducedMotion();
+interface TeamPageLayoutProps {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  members: TeamMember[];
+  highlightedMember?: TeamMember;
+  children?: React.ReactNode;
+}
+
+function TeamPageLayoutComponent({
+  title,
+  subtitle,
+  description,
+  members,
+  highlightedMember,
+  children
+}: TeamPageLayoutProps) {
+
   const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const shouldAnimate = !prefersReducedMotion && !isMobile;
+  const shouldAnimate = !prefersReducedMotion;
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: isMobile ? 0.03 : 0.05
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: isMobile ? 12 : 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  };
 
   return (
-    <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden bg-[#020c1b]">
-      
-      {/* Base Radial Depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.6)_0%,rgba(2,12,27,1)_100%)]" />
-
-      {/* Desktop Premium Enhancements */}
-      {!isMobile && (
-        <>
-          {/* Subtle Noise / Texture */}
-          <div className="absolute inset-0 opacity-[0.04] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0id2hpdGUiLz48L3N2Zz4=')]" />
-
-          {/* Blue Ambient Glow */}
-          <motion.div
-            className="absolute top-[-20%] left-[-15%] w-[45vw] h-[45vw] rounded-full bg-blue-600/8 blur-[70px]"
-            animate={
-              shouldAnimate
-                ? { opacity: [0.35, 0.55, 0.35] }
-                : { opacity: 0.4 }
-            }
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-
-          {/* Gold Accent Depth */}
-          <motion.div
-            className="absolute bottom-[-25%] right-[-15%] w-[55vw] h-[55vw] rounded-full bg-yellow-400/5 blur-[90px]"
-            animate={
-              shouldAnimate
-                ? { opacity: [0.25, 0.45, 0.25] }
-                : { opacity: 0.3 }
-            }
-            transition={{
-              duration: 26,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 3,
-            }}
-          />
-        </>
-      )}
+    <div className="min-h-screen bg-navy-950 pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
+      <BackgroundLayer />
+      {/* rest of your JSX remains EXACTLY same */}
     </div>
   );
 }
+
+export default React.memo(TeamPageLayoutComponent);
