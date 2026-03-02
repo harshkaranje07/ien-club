@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion, Variants, useReducedMotion } from 'motion/react';
-import { TeamMember } from '../../constants/teamData';
-import { Card } from '../ui/Card';
-import { BackgroundDots } from '../ui/BackgroundDots';
+import { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 
-interface TeamPageLayoutProps {
-  title: string;
-  subtitle?: string;
-  description?: string;
-  members: TeamMember[];
-  highlightedMember?: TeamMember;
-  children?: React.ReactNode;
-}
-
-export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtitle, description, members, highlightedMember, children }: TeamPageLayoutProps) {
-  const [isMobile, setIsMobile] = useState(false);
+export function BackgroundLayer() {
   const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -24,125 +12,34 @@ export const TeamPageLayout = React.memo(function TeamPageLayout({ title, subtit
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const shouldAnimate = !prefersReducedMotion;
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: isMobile ? 0.03 : 0.05
-      }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: isMobile ? 12 : 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: isMobile ? 0.4 : 0.4, ease: "easeOut" }
-    }
-  };
+  const shouldAnimate = !prefersReducedMotion && !isMobile;
 
   return (
-    <div className="min-h-screen bg-navy-950 pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
-      <BackgroundDots />
-      {/* Premium Background Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] md:h-[500px] bg-gradient-to-b from-navy-900/50 to-transparent pointer-events-none z-0" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        {/* Header */}
-        <motion.div 
-          initial={isMobile ? { opacity: 0, y: 15 } : shouldAnimate ? { opacity: 0, y: -10 } : { opacity: 1, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.5, ease: "easeOut" }}
-          className="text-center mb-16 md:mb-24"
-        >
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 tracking-tight">
-            {title}
-          </h1>
-          <div className="w-12 md:w-16 h-1 bg-gold-500/50 mx-auto mb-6 rounded-full" />
-          {subtitle && (
-            <p className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              {subtitle}
-            </p>
-          )}
-          {description && (
-            <p className="text-slate-400 text-base max-w-3xl mx-auto mt-6 font-light leading-relaxed">
-              {description}
-            </p>
-          )}
-        </motion.div>
+    <div className="fixed inset-0 pointer-events-none -z-10 bg-navy-950 overflow-hidden">
+      {/* Base Depth */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(11,44,95,0.8)_0%,rgba(2,12,27,1)_100%)] opacity-60" />
 
-        {/* Custom Content */}
-        {children && (
-          <div className="mb-16 md:mb-24">
-            {children}
-          </div>
-        )}
+      {/* Desktop Enhancements */}
+      {!isMobile && (
+        <>
+          {/* Subtle Grid Texture */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvc3ZnPg==')] opacity-[0.15] mix-blend-overlay" />
 
-        {/* Highlighted Member (e.g., CEO for CIIL) */}
-        {highlightedMember && (
-          <motion.div
-            initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.5, ease: "easeOut" }}
-            className="mb-16 md:mb-24 flex justify-center"
-          >
-            <Card variant="glass-dark" className={`max-w-md w-full p-8 border-white/5 bg-white/[0.02] shadow-sm text-center relative overflow-hidden group ${isMobile ? '' : 'hover:-translate-y-1'} transition-all duration-300 hover:border-gold-500/30`}>
-              {/* Subtle hover glow */}
-              <div className="absolute inset-0 bg-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              {/* Top accent line */}
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-gold-500/50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="inline-block px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-6">
-                Leadership
-              </div>
-              <h3 className="text-2xl md:text-3xl font-display font-semibold text-white mb-2 tracking-tight">{highlightedMember.name}</h3>
-              <p className="text-gold-400 font-medium mb-4">{highlightedMember.role}</p>
-              <div className="w-12 h-[1px] bg-white/10 mx-auto my-5" />
-              <p className="text-slate-400 text-sm font-light tracking-wide uppercase">{highlightedMember.designation}</p>
-            </Card>
-          </motion.div>
-        )}
+          {/* Soft Blue Depth Glow */}
+          <motion.div 
+            className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/10 blur-[80px] mix-blend-screen"
+            animate={shouldAnimate ? { opacity: [0.4, 0.6, 0.4] } : { opacity: 0.5 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          />
 
-        {/* Members Grid */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-        >
-          {members.filter(m => !m.isHighlight).map((member, index) => (
-            <motion.div key={`${member.name}-${index}`} variants={itemVariants}>
-              <Card variant="glass-dark" className={`h-full p-6 md:p-8 border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-gold-500/30 transition-all duration-300 group shadow-sm relative overflow-hidden ${isMobile ? '' : 'hover:-translate-y-1'}`}>
-                {/* Subtle hover glow */}
-                <div className="absolute inset-0 bg-gold-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                {/* Left accent line */}
-                <div className="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-gold-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                <div className="flex flex-col h-full relative z-10">
-                  <h3 className="text-lg md:text-xl font-display font-semibold text-white mb-1 group-hover:text-gold-400 transition-colors tracking-tight">
-                    {member.name}
-                  </h3>
-                  <p className="text-gold-400/90 text-sm font-medium mb-6">
-                    {member.role}
-                  </p>
-                  <div className="mt-auto pt-5 border-t border-white/5">
-                    <p className="text-slate-400 text-[10px] md:text-xs uppercase tracking-widest font-medium">
-                      {member.designation}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+          {/* Subtle Gold Radial Glow */}
+          <motion.div 
+            className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-gold-500/5 blur-[100px] mix-blend-screen"
+            animate={shouldAnimate ? { opacity: [0.3, 0.5, 0.3] } : { opacity: 0.4 }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+        </>
+      )}
     </div>
   );
 }
-);
