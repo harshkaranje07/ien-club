@@ -1,48 +1,55 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 export function BackgroundDots() {
   const prefersReducedMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024); // laptop+ only
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const checkScreen = () => {
+      if (typeof window !== "undefined") {
+        setIsDesktop(window.innerWidth >= 1024); // only laptop+
+      }
+    };
+
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
-  // Disable on mobile or reduced motion
-  if (isMobile || prefersReducedMotion) return null;
+  // Do not render anything on mobile or reduced motion
+  if (!isDesktop || prefersReducedMotion) return null;
 
   const dots = useMemo(() => {
-    const count = 22; // balanced density
+    const count = 18; // balanced professional density
 
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
-      duration: 25 + Math.random() * 20, // very slow drift (25–45s)
+      duration: 30 + Math.random() * 20, // ultra slow drift
       delay: Math.random() * 10,
-      size: Math.random() > 0.6 ? "w-1.5 h-1.5" : "w-2 h-2",
-      opacity: 0.15 + Math.random() * 0.1, // subtle 0.15–0.25
+      size: Math.random() > 0.5 ? 6 : 8, // px values
+      opacity: 0.12 + Math.random() * 0.08,
     }));
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
       {dots.map((dot) => (
         <motion.div
           key={dot.id}
-          className={`absolute ${dot.size} bg-white rounded-full`}
+          className="absolute bg-white/60 rounded-full"
           style={{
             top: dot.top,
             left: dot.left,
+            width: dot.size,
+            height: dot.size,
             opacity: dot.opacity,
           }}
           animate={{
-            x: [0, 15, -10, 0],
-            y: [0, -10, 10, 0],
+            x: [0, 20, -15, 0],
+            y: [0, -15, 15, 0],
           }}
           transition={{
             duration: dot.duration,
