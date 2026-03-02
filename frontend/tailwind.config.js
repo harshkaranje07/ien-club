@@ -14,7 +14,7 @@ export default {
       ========================= */
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
 
       /* =========================
@@ -24,28 +24,31 @@ export default {
 
         /* NAVY SYSTEM */
         navy: {
-          50:  '#eef3fa',
-          100: '#d9e3f2',
-          200: '#b3c7e5',
-          300: '#8dabd8',
-          400: '#678fcb',
-          500: '#4173be',
-          600: '#2f5ea4',
-          700: '#234a80',
-          800: '#17365c',
-          900: '#0B2C5F',
-          950: '#061A38',   // 🔥 added for dark tech backgrounds
+          50:  '#f0f4f8',
+          100: '#d9e2ec',
+          200: '#bcccdc',
+          300: '#9fb3c8',
+          400: '#829ab1',
+          500: '#627d98',
+          600: '#486581',
+          700: '#334e68',
+          800: '#243b53',
+          900: '#102a43',
+          950: '#050b18',   // 🔥 Deeper, richer navy
         },
 
-        /* GOLD SYSTEM */
+        /* GOLD SYSTEM (Champagne / Premium) */
         gold: {
-          100: '#f9f2d7',
-          200: '#f2e3a6',
-          300: '#ebd475',
-          400: '#e4c544',
-          500: '#D4AF37',
-          600: '#b9962f',
-          700: '#9e7e27',
+          50:  '#fdfaf2',
+          100: '#f9f2e6',
+          200: '#f1e2cc',
+          300: '#e8d1b0',
+          400: '#dfc195',
+          500: '#d4b483',   // 🔥 Premium Champagne Gold
+          600: '#c2a372',
+          700: '#a68a5f',
+          800: '#8a714d',
+          900: '#6e593c',
         },
 
         /* SUPPORT COLORS */

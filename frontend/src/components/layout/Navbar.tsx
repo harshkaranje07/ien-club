@@ -48,10 +48,10 @@ export function Navbar() {
   const shouldAnimate = !prefersReducedMotion && !isMobile;
 
   const navClass = scrolled 
-    ? `bg-navy-900/80 ${isMobile ? 'backdrop-blur-md' : 'backdrop-blur-xl'} border-b border-white/10 shadow-lg py-3` 
-    : `bg-navy-900/60 ${isMobile ? 'backdrop-blur-md' : 'backdrop-blur-xl'} border-b border-white/10 shadow-md py-6`;
+    ? `bg-navy-950/80 backdrop-blur-md border-b border-white/10 shadow-sm py-3` 
+    : `bg-navy-950/40 backdrop-blur-md border-b border-white/10 py-5`;
 
-  const linkClass = 'text-slate-200 hover:text-white';
+  const linkClass = 'text-slate-200 hover:text-gold-400 transition-colors duration-300 tracking-wide';
 
   const logoTextClass = 'text-white';
 
@@ -60,29 +60,16 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-4 group">
-            <div className="flex items-center gap-3">
-              <div className={`rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-white border border-slate-200 shadow-sm group-hover:shadow-md ${scrolled ? 'h-10 w-10' : 'h-11 w-11'}`}>
-                <img 
-                  src="/logo.png" 
-                  alt="IEN Logo" 
-                  className="w-full h-full object-contain p-1"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://picsum.photos/seed/ien/48/48';
-                  }}
-                />
-              </div>
-              <div className={`w-[1px] transition-all duration-500 ${scrolled ? 'h-6 bg-slate-300' : 'h-8 bg-white/20'}`} />
-              <div className={`rounded-full flex items-center justify-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-white border border-slate-200 shadow-sm group-hover:shadow-md ${scrolled ? 'h-10 w-10' : 'h-11 w-11'}`}>
-                <img 
-                  src="/college.png" 
-                  alt="PCCOE Logo" 
-                  className="w-full h-full object-contain p-1"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://picsum.photos/seed/pccoe/48/48';
-                  }}
-                />
-              </div>
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className={`rounded-lg flex items-center justify-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-white border border-white/10 shadow-sm ${scrolled ? 'h-9 w-9' : 'h-10 w-10'}`}>
+              <img 
+                src="/logo.png" 
+                alt="IEN Logo" 
+                className="w-full h-full object-contain p-1"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://picsum.photos/seed/ien/48/48';
+                }}
+              />
             </div>
             <span className={`font-display font-bold tracking-tight transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${logoTextClass} ${scrolled ? 'text-lg' : 'text-xl'}`}>
               IEN <span className="text-gold-500">PCCOE</span>
@@ -97,11 +84,10 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`relative py-2 text-sm font-semibold transition-colors group ${linkClass} ${isActive ? 'text-white' : ''}`}
+                  className={`relative py-2 text-sm font-medium transition-colors group ${linkClass} ${isActive ? 'text-gold-400' : ''}`}
                 >
                   {link.name}
-                  <span className={`absolute left-0 bottom-0 w-full h-[2px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
-                  <span className={`absolute inset-0 bg-gold-400/20 blur-md rounded-full -z-10 opacity-0 transition-opacity duration-300 ${isActive ? 'opacity-50' : 'group-hover:opacity-100'}`} />
+                  <span className={`absolute left-0 bottom-0 w-full h-[1px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                 </Link>
               );
             })}
@@ -112,27 +98,26 @@ export function Navbar() {
               onMouseEnter={() => setActiveDropdown(true)}
               onMouseLeave={() => setActiveDropdown(false)}
             >
-              <button className={`relative flex items-center gap-1 text-sm font-semibold transition-colors py-2 group ${linkClass} ${location.pathname.startsWith('/divisions') ? 'text-white' : ''}`}>
+              <button className={`relative flex items-center gap-1 text-sm font-medium transition-colors py-2 group ${linkClass} ${location.pathname.startsWith('/divisions') ? 'text-gold-400' : ''}`}>
                 Divisions <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown ? 'rotate-180' : ''}`} />
-                <span className={`absolute left-0 bottom-0 w-full h-[2px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${activeDropdown || location.pathname.startsWith('/divisions') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
-                <span className={`absolute inset-0 bg-gold-400/20 blur-md rounded-full -z-10 opacity-0 transition-opacity duration-300 ${activeDropdown || location.pathname.startsWith('/divisions') ? 'opacity-50' : 'group-hover:opacity-100'}`} />
+                <span className={`absolute left-0 bottom-0 w-full h-[1px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${activeDropdown || location.pathname.startsWith('/divisions') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
               </button>
               
               <AnimatePresence>
                 {activeDropdown && (
                   <motion.div
-                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    exit={{ opacity: 0, y: 5, scale: 0.98 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-72"
                   >
-                    <div className={`backdrop-blur-xl rounded-2xl shadow-2xl border overflow-hidden p-2 ring-1 bg-navy-900/95 border-white/10 ring-white/5`}>
+                    <div className={`backdrop-blur-xl rounded-xl shadow-2xl border overflow-hidden p-2 bg-navy-950/95 border-white/10`}>
                       {divisions.map((div) => (
                         <Link
                           key={div.name}
                           to={div.path}
-                          className={`block p-4 rounded-xl transition-all duration-300 group hover:bg-white/5`}
+                          className={`block p-4 rounded-lg transition-all duration-300 group hover:bg-white/5`}
                         >
                           <div className={`font-display font-bold transition-colors mb-1 text-white group-hover:text-gold-400`}>
                             {div.name}
@@ -152,11 +137,10 @@ export function Navbar() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`relative py-2 text-sm font-semibold transition-colors group ${linkClass} ${isActive ? 'text-white' : ''}`}
+                  className={`relative py-2 text-sm font-medium transition-colors group ${linkClass} ${isActive ? 'text-gold-400' : ''}`}
                 >
                   {link.name}
-                  <span className={`absolute left-0 bottom-0 w-full h-[2px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
-                  <span className={`absolute inset-0 bg-gold-400/20 blur-md rounded-full -z-10 opacity-0 transition-opacity duration-300 ${isActive ? 'opacity-50' : 'group-hover:opacity-100'}`} />
+                  <span className={`absolute left-0 bottom-0 w-full h-[1px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                 </Link>
               );
             })}
@@ -165,20 +149,20 @@ export function Navbar() {
               to="/ciil/ennovatex"
               className={`relative flex items-center gap-3 px-4 py-2 transition-all duration-300 group ml-2 ${
                 location.pathname === '/ciil/ennovatex'
-                  ? 'bg-gold-500/10 rounded-md shadow-[0_0_20px_rgba(212,175,55,0.15)]'
+                  ? 'bg-gold-500/5 rounded-lg'
                   : ''
               }`}
             >
-              <span className={`w-2 h-2 bg-gold-500 rounded-full ${shouldAnimate ? 'animate-pulse' : ''} shadow-[0_0_10px_rgba(212,175,55,0.6)] shrink-0`} />
+              <span className={`w-1.5 h-1.5 bg-gold-500 rounded-full ${shouldAnimate ? 'animate-pulse' : ''} shrink-0`} />
               <div className="flex flex-col">
-                <span className="text-[9px] leading-none tracking-widest uppercase text-gold-500/70 font-bold mb-1">
+                <span className="text-[8px] leading-none tracking-[0.2em] uppercase text-gold-500/60 font-bold mb-1">
                   CIIL Presents
                 </span>
-                <span className="text-gold-400 font-bold text-sm leading-none group-hover:text-gold-300 transition-colors group-hover:shadow-[0_0_20px_rgba(212,175,55,0.5)]">
+                <span className="text-gold-400 font-bold text-sm leading-none group-hover:text-gold-300 transition-colors">
                   ENNOVATE’X
                 </span>
               </div>
-              <span className={`absolute left-0 bottom-0 w-full h-[2px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${location.pathname === '/ciil/ennovatex' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
+              <span className={`absolute left-0 bottom-0 w-full h-[1px] bg-gold-500 origin-left transition-transform duration-300 ease-out ${location.pathname === '/ciil/ennovatex' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
             </Link>
 
             <div className="flex items-center gap-4 ml-2">
