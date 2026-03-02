@@ -6,28 +6,26 @@ export function BackgroundDots() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024); // laptop+ only
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // 🚫 Completely disable on mobile or reduced motion
+  // Disable on mobile or reduced motion
   if (isMobile || prefersReducedMotion) return null;
 
-  // Generate dots only once
   const dots = useMemo(() => {
-    const count = 20; // Stable count (not random every render)
+    const count = 22; // balanced density
 
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
-      top: `${Math.random() * 95}%`,
-      left: `${Math.random() * 95}%`,
-      duration: 14 + Math.random() * 8, // 14–22s slow movement
-      delay: Math.random() * 5,
-      size: Math.random() > 0.5 ? "w-2 h-2" : "w-2.5 h-2.5",
-      color: Math.random() > 0.5 ? "bg-gold-400" : "bg-white",
-      opacity: 0.25 + Math.random() * 0.15, // 0.25–0.40
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      duration: 25 + Math.random() * 20, // very slow drift (25–45s)
+      delay: Math.random() * 10,
+      size: Math.random() > 0.6 ? "w-1.5 h-1.5" : "w-2 h-2",
+      opacity: 0.15 + Math.random() * 0.1, // subtle 0.15–0.25
     }));
   }, []);
 
@@ -36,14 +34,15 @@ export function BackgroundDots() {
       {dots.map((dot) => (
         <motion.div
           key={dot.id}
-          className={`absolute ${dot.size} ${dot.color} rounded-full`}
+          className={`absolute ${dot.size} bg-white rounded-full`}
           style={{
             top: dot.top,
             left: dot.left,
             opacity: dot.opacity,
           }}
           animate={{
-            y: [0, -20, 0],
+            x: [0, 15, -10, 0],
+            y: [0, -10, 10, 0],
           }}
           transition={{
             duration: dot.duration,
