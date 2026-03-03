@@ -1,9 +1,9 @@
-import { Rocket, Mail, MapPin, Phone, ArrowRight, Code } from 'lucide-react';
+import { Rocket, Mail, MapPin, Phone, ArrowRight, Code, Instagram, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Footer() {
   return (
-    <footer className="bg-navy-950 text-slate-300 py-20 border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-navy-950 text-slate-300 py-20 border-t border-white/10 relative overflow-hidden antialiased">
       {/* Glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-navy-800/50 blur-[120px] rounded-full pointer-events-none" />
       
@@ -29,13 +29,24 @@ export function Footer() {
               The central innovation hub at Pimpri Chinchwad College of Engineering. We transform ideas into reality, research into patents, and students into founders.
             </p>
             <div className="flex gap-4">
-              {/* Social links placeholders */}
-              {['Twitter', 'LinkedIn', 'Instagram'].map((social) => (
-                <a key={social} href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold-500 hover:border-gold-500 hover:text-white transition-all">
-                  <span className="sr-only">{social}</span>
-                  <div className="w-4 h-4 bg-current rounded-sm" /> {/* Placeholder icon */}
-                </a>
-              ))}
+              <a 
+                href="https://www.instagram.com/pccoe_ien?igsh=Ym1qMjR2Z2FsZGd5" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold-500 hover:border-gold-500 hover:text-navy-950 transition-all group"
+              >
+                <span className="sr-only">Instagram</span>
+                <Instagram size={18} className="group-hover:scale-110 transition-transform" />
+              </a>
+              <a 
+                href="https://www.linkedin.com/company/innovation-and-entrepreneurship-ien-pccoe/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold-500 hover:border-gold-500 hover:text-navy-950 transition-all group"
+              >
+                <span className="sr-only">LinkedIn</span>
+                <Linkedin size={18} className="group-hover:scale-110 transition-transform" />
+              </a>
             </div>
           </div>
 
@@ -53,17 +64,35 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-slate-400">
                 <MapPin size={20} className="text-gold-500 shrink-0 mt-0.5" />
-                <span>Sector 26, Pradhikaran, Nigdi, Pune, Maharashtra 411044</span>
+                <span className="text-sm">Sector 26, Pradhikaran, Nigdi, Pune, Maharashtra 411044</span>
               </li>
               <li className="flex items-center gap-3 text-slate-400">
                 <Mail size={20} className="text-gold-500 shrink-0" />
-                <span>ien@pccoe.org</span>
+                <span className="text-sm">ien@pccoe.org</span>
               </li>
               <li className="flex items-center gap-3 text-slate-400">
                 <Phone size={20} className="text-gold-500 shrink-0" />
-                <span>+91 20 2765 3168</span>
+                <span className="text-sm">+91 20 2765 3168</span>
               </li>
             </ul>
+            
+            <div className="mt-8 pt-6 border-t border-white/5">
+              <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-4">Connect With IEN</h4>
+              <div className="space-y-3">
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-slate-500 uppercase font-bold">Technical Lead</span>
+                  <a href="tel:+917770075055" className="text-xs text-slate-300 hover:text-gold-400 transition-colors">
+                    Harshwardhan Karanje: +91 7770075055
+                  </a>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-slate-500 uppercase font-bold">Convenor</span>
+                  <a href="tel:+918668705817" className="text-xs text-slate-300 hover:text-gold-400 transition-colors">
+                    Mr. Jayesh Patil: +91 8668705817
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

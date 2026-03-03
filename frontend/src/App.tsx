@@ -17,6 +17,7 @@ const Placeholder = lazy(() => import('./pages/Placeholder'));
 const Team = lazy(() => import('./pages/Team'));
 const About = lazy(() => import('./pages/About'));
 const Events = lazy(() => import('./pages/Events'));
+const Contact = lazy(() => import('./pages/Contact'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const IICPage = lazy(() => import('./pages/divisions/IICPage'));
@@ -47,7 +48,7 @@ export default function App() {
             <Route path="projects" element={<Placeholder />} />
             <Route path="gallery" element={<Placeholder />} />
             <Route path="team" element={<Team />} />
-            <Route path="contact" element={<Placeholder />} />
+            <Route path="contact" element={<Contact />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsOfService />} />
           </Route>
