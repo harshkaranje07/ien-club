@@ -100,7 +100,7 @@ export default function EnnovateX() {
   const shouldAnimate = !prefersReducedMotion && !isMobile;
 
   return (
-    <div className="overflow-x-hidden relative min-h-screen pt-20 font-sans bg-black">
+    <div className="overflow-x-hidden relative min-h-screen pt-24 md:pt-32 font-sans bg-black antialiased">
       {/* Global Background Layer */}
       <div className="fixed inset-0 pointer-events-none -z-10 bg-black overflow-hidden">
         {/* Base Depth */}
@@ -123,7 +123,7 @@ export default function EnnovateX() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-12 md:pt-20 pb-12 md:pb-16">
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-12 md:pt-20 pb-20 md:pb-28">
         {/* Spotlight Glow */}
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[600px] h-[250px] md:h-[600px] bg-gold-500/5 ${isMobile ? 'blur-[30px]' : 'blur-[80px]'} rounded-full pointer-events-none z-0 mix-blend-screen`} />
         
@@ -131,7 +131,7 @@ export default function EnnovateX() {
           initial={shouldAnimate ? { opacity: 0 } : { opacity: 1 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center"
+          className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center"
         >
           <motion.div
             initial={shouldAnimate ? { opacity: 0, scale: 0.9 } : isMobile ? { opacity: 0 } : { opacity: 1, scale: 1 }}
@@ -241,8 +241,8 @@ export default function EnnovateX() {
       </section>
 
       {/* Why Participate */}
-      <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <Section className="relative z-20 pt-20 pb-20 border-t border-white/5 antialiased">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -250,7 +250,7 @@ export default function EnnovateX() {
             transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white mb-4">
               Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Participate</span>
             </h2>
           </motion.div>
@@ -263,7 +263,7 @@ export default function EnnovateX() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:border-gold-500/30 transition-colors"
+                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:border-gold-500/30 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1"
               >
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="text-gold-500 shrink-0 mt-0.5" size={18} />
@@ -279,14 +279,14 @@ export default function EnnovateX() {
       </Section>
 
       {/* Eligibility Section */}
-      <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <Section className="relative z-20 pt-20 pb-20 border-t border-white/5 antialiased">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={isMobile ? { duration: 0.45, ease: "easeOut" } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-neutral-900/50 border border-gold-500/40 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(212,175,55,0.15)] relative overflow-hidden"
+            className="bg-neutral-900/50 border border-gold-500/40 rounded-3xl p-8 md:p-12 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden max-w-4xl mx-auto"
           >
             <div className={`absolute top-0 right-0 w-64 h-64 bg-gold-500/10 ${isMobile ? 'blur-[50px]' : 'blur-[80px]'} rounded-full pointer-events-none`} />
             
@@ -322,10 +322,10 @@ export default function EnnovateX() {
       </Section>
 
       {/* 3-Day Experience Timeline */}
-      <Section id="flow" className="relative z-20 pt-16 pb-16 border-t border-white/5">
+      <Section id="flow" className="relative z-20 pt-20 pb-20 border-t border-white/5 antialiased">
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[1000px] h-[400px] md:h-[800px] bg-gold-500/5 ${isMobile ? 'blur-[40px]' : 'blur-[120px]'} pointer-events-none mix-blend-screen z-0`} />
         
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -333,12 +333,12 @@ export default function EnnovateX() {
             transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white mb-6">
               3-Day <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Experience</span>
             </h2>
           </motion.div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-4xl mx-auto">
             {eventFlow.map((day, index) => (
               <motion.div
                 key={day.day}
@@ -346,7 +346,7 @@ export default function EnnovateX() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
-                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedDay === index ? `bg-white/5 border-gold-500/40 ${isMobile ? '' : 'shadow-[0_0_30px_rgba(212,175,55,0.1)]'}` : 'bg-neutral-900/50 border-white/10 hover:border-white/20'}`}
+                className={`border rounded-2xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md ${expandedDay === index ? `bg-white/5 border-gold-500/40` : 'bg-neutral-900/50 border-white/10 hover:border-white/20'}`}
               >
                 <button 
                   onClick={() => setExpandedDay(expandedDay === index ? null : index)}
@@ -404,8 +404,8 @@ export default function EnnovateX() {
       </Section>
 
       {/* FAQ Section */}
-      <Section className="relative z-20 pt-16 pb-16 border-t border-white/5">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <Section className="relative z-20 pt-20 pb-20 border-t border-white/5 antialiased">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={isMobile ? { opacity: 0, y: 12 } : shouldAnimate ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -413,12 +413,12 @@ export default function EnnovateX() {
             transition={isMobile ? { duration: 0.45, ease: "easeOut" } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white mb-6">
               Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Questions</span>
             </h2>
           </motion.div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-3xl mx-auto">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
@@ -426,7 +426,7 @@ export default function EnnovateX() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
-                className="border border-white/10 rounded-xl bg-neutral-900/50 overflow-hidden hover:border-white/20 transition-colors"
+                className="border border-white/10 rounded-xl bg-neutral-900/50 overflow-hidden hover:border-white/20 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <button 
                   onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
@@ -459,7 +459,7 @@ export default function EnnovateX() {
       </Section>
 
       {/* Registration CTA */}
-      <section id="register" className="py-20 relative overflow-hidden border-t border-white/5">
+      <section id="register" className="py-20 md:py-28 relative overflow-hidden border-t border-white/5 antialiased">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] pointer-events-none" />
         
         <motion.div 
@@ -467,9 +467,9 @@ export default function EnnovateX() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-10 md:p-16 bg-neutral-900/50 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+          className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-10 md:p-16 bg-neutral-900/50 shadow-sm hover:shadow-md transition-all duration-300"
         >
-          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white mb-4">
             Registrations Open
           </h2>
           <p className="text-xl text-gold-400 font-medium mb-10 tracking-wide">

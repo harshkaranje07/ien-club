@@ -53,3 +53,27 @@ export const CIIL_TEAM: TeamMember[] = [
     isHighlight: true 
   },
 ];
+
+export const STUDENTS_TEAM: TeamMember[] = [
+  {
+    name: 'Ritik Lipate',
+    role: 'President IEN',
+    designation: 'EnTC Department',
+    isHighlight: true
+  },
+  {
+    name: 'Miss. Ishani Soundankar',
+    role: 'Vice President IEN',
+    designation: 'EnTC Department'
+  },
+  {
+    name: 'Mr. Jayesh Patil',
+    role: 'Convenor IEN',
+    designation: 'AIML Department'
+  },
+  {
+    name: 'Mr. Shreyash Kadam',
+    role: 'Secretary IEN',
+    designation: 'EnTC Department'
+  }
+];
