@@ -72,27 +72,9 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-slate-400">
                 <Phone size={20} className="text-gold-500 shrink-0" />
-                <span className="text-sm">+91 20 2765 3168</span>
+                <a href="tel:+919284383901" className="text-sm hover:text-gold-400 transition-colors">+91 9284383901</a>
               </li>
             </ul>
-            
-            <div className="mt-8 pt-6 border-t border-white/5">
-              <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-4">Connect With IEN</h4>
-              <div className="space-y-3">
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-slate-500 uppercase font-bold">Technical Lead</span>
-                  <a href="tel:+917770075055" className="text-xs text-slate-300 hover:text-gold-400 transition-colors">
-                    Harshwardhan Karanje: +91 7770075055
-                  </a>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-slate-500 uppercase font-bold">Convenor</span>
-                  <a href="tel:+918668705817" className="text-xs text-slate-300 hover:text-gold-400 transition-colors">
-                    Mr. Jayesh Patil: +91 8668705817
-                  </a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

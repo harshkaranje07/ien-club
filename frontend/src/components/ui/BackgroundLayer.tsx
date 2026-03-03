@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { useState, useEffect, memo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
-export function BackgroundLayer() {
+export const BackgroundLayer = memo(function BackgroundLayer() {
   const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -42,4 +42,4 @@ export function BackgroundLayer() {
       )}
     </div>
   );
-}
+});
