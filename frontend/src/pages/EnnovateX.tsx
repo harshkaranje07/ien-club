@@ -100,9 +100,27 @@ export default function EnnovateX() {
   const shouldAnimate = !prefersReducedMotion && !isMobile;
 
   return (
-    <div className="overflow-x-hidden relative min-h-screen pt-20 font-sans">
+    <div className="overflow-x-hidden relative min-h-screen pt-20 font-sans bg-black">
       {/* Global Background Layer */}
-      <BackgroundLayer />
+      <div className="fixed inset-0 pointer-events-none -z-10 bg-black overflow-hidden">
+        {/* Base Depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,rgba(0,0,0,1)_100%)] opacity-80" />
+        
+        {/* Subtle Grid Texture */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvc3ZnPg==')] opacity-[0.1] mix-blend-overlay" />
+
+        {/* Soft Gold Radial Glows */}
+        <motion.div 
+          className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gold-500/5 blur-[100px] mix-blend-screen"
+          animate={shouldAnimate ? { opacity: [0.2, 0.4, 0.2] } : { opacity: 0.3 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-gold-600/5 blur-[120px] mix-blend-screen"
+          animate={shouldAnimate ? { opacity: [0.2, 0.4, 0.2] } : { opacity: 0.3 }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+      </div>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center pt-12 md:pt-20 pb-12 md:pb-16">
@@ -153,7 +171,7 @@ export default function EnnovateX() {
                 )}
               </span>
             </motion.h1>
-            <h3 className="text-2xl md:text-3xl font-display font-light text-slate-300 tracking-[0.3em] uppercase mt-8">
+            <h3 className="text-2xl md:text-3xl font-display font-light text-neutral-300 tracking-[0.3em] uppercase mt-8">
               IEN Startup Fest
             </h3>
             <div className="h-[2px] w-[120px] bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-6" />
@@ -182,7 +200,7 @@ export default function EnnovateX() {
             initial={shouldAnimate ? { opacity: 0, y: 30 } : isMobile ? { opacity: 0 } : { opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={isMobile ? { duration: 0.3, ease: "easeOut" } : { duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="text-base md:text-xl text-[#d1d5db] max-w-2xl mx-auto mb-10 md:mb-14 font-light leading-relaxed md:leading-loose opacity-85"
+            className="text-base md:text-xl text-neutral-300 max-w-2xl mx-auto mb-10 md:mb-14 font-light leading-relaxed md:leading-loose opacity-85"
           >
             A 3-Day Immersive Entrepreneurial Experience Designed to Transform Students into Startup Founders.
           </motion.p>
@@ -196,7 +214,7 @@ export default function EnnovateX() {
             <Button href="#register" size="lg" className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-gold-500 text-black border-none hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 font-bold px-10 py-4">
               Register Now
             </Button>
-            <Button href="#flow" variant="glass" size="lg" className="w-full sm:w-auto bg-navy-900/20 border-gold-500/30 text-gold-400 hover:bg-gold-500/10 hover:border-gold-500/50 transition-all duration-300 px-10 py-4">
+            <Button href="#flow" variant="glass" size="lg" className="w-full sm:w-auto bg-neutral-900/20 border-gold-500/30 text-gold-400 hover:bg-gold-500/10 hover:border-gold-500/50 transition-all duration-300 px-10 py-4">
               View Event Structure
             </Button>
           </motion.div>
@@ -250,8 +268,8 @@ export default function EnnovateX() {
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="text-gold-500 shrink-0 mt-0.5" size={18} />
                   <div>
-                    <h3 className="text-lg font-bold text-slate-200 mb-1">{item.title}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                    <h3 className="text-lg font-bold text-neutral-200 mb-1">{item.title}</h3>
+                    <p className="text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               </motion.div>
@@ -268,7 +286,7 @@ export default function EnnovateX() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={isMobile ? { duration: 0.45, ease: "easeOut" } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-navy-900/50 border border-gold-500/40 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(212,175,55,0.15)] relative overflow-hidden"
+            className="bg-neutral-900/50 border border-gold-500/40 rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(212,175,55,0.15)] relative overflow-hidden"
           >
             <div className={`absolute top-0 right-0 w-64 h-64 bg-gold-500/10 ${isMobile ? 'blur-[50px]' : 'blur-[80px]'} rounded-full pointer-events-none`} />
             
@@ -281,7 +299,7 @@ export default function EnnovateX() {
                 <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-sm font-bold tracking-wide shadow-[0_0_15px_rgba(212,175,55,0.2)] mb-2">
                   Limited Seats
                 </span>
-                <span className="text-xs text-slate-500 uppercase tracking-widest">Shortlisting After Day 1</span>
+                <span className="text-xs text-neutral-500 uppercase tracking-widest">Shortlisting After Day 1</span>
               </div>
             </div>
             
@@ -295,7 +313,7 @@ export default function EnnovateX() {
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4">
                   <CheckCircle2 className="text-gold-500 shrink-0 mt-0.5" size={20} />
-                  <span className="text-lg text-slate-200 font-medium">{item}</span>
+                  <span className="text-lg text-neutral-200 font-medium">{item}</span>
                 </div>
               ))}
             </div>
@@ -328,7 +346,7 @@ export default function EnnovateX() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
-                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedDay === index ? `bg-white/5 border-gold-500/40 ${isMobile ? '' : 'shadow-[0_0_30px_rgba(212,175,55,0.1)]'}` : 'bg-navy-900/50 border-white/10 hover:border-white/20'}`}
+                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${expandedDay === index ? `bg-white/5 border-gold-500/40 ${isMobile ? '' : 'shadow-[0_0_30px_rgba(212,175,55,0.1)]'}` : 'bg-neutral-900/50 border-white/10 hover:border-white/20'}`}
               >
                 <button 
                   onClick={() => setExpandedDay(expandedDay === index ? null : index)}
@@ -346,7 +364,7 @@ export default function EnnovateX() {
                       </h3>
                     </div>
                   </div>
-                  <ChevronDown className={`text-slate-400 transition-transform duration-300 ${expandedDay === index ? 'rotate-180 text-gold-400' : ''}`} size={24} />
+                  <ChevronDown className={`text-neutral-400 transition-transform duration-300 ${expandedDay === index ? 'rotate-180 text-gold-400' : ''}`} size={24} />
                 </button>
 
                 <AnimatePresence initial={false}>
@@ -363,13 +381,13 @@ export default function EnnovateX() {
                           <div className="relative pl-6 border-l-2 border-gold-500/30">
                             <ul className="space-y-4 mb-8">
                               {day.points.map((point, i) => (
-                                <li key={i} className="flex items-start gap-3 text-slate-300 text-lg">
+                                <li key={i} className="flex items-start gap-3 text-neutral-300 text-lg">
                                   <span className="w-1.5 h-1.5 rounded-full bg-gold-500 shrink-0 mt-2.5" />
                                   <span>{point}</span>
                                 </li>
                               ))}
                             </ul>
-                            <div className="bg-navy-900/50 border border-gold-500/20 rounded-xl p-4 inline-block">
+                            <div className="bg-neutral-900/50 border border-gold-500/20 rounded-xl p-4 inline-block">
                               <div className="text-xs text-gold-500/70 uppercase tracking-widest mb-1 font-bold">Outcome</div>
                               <div className="text-gold-400 font-medium text-lg">{day.outcome}</div>
                             </div>
@@ -408,16 +426,16 @@ export default function EnnovateX() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={isMobile ? { duration: 0.4, delay: index * 0.05, ease: "easeOut" } : { duration: 0.5, delay: shouldAnimate ? index * 0.1 : 0 }}
-                className="border border-white/10 rounded-xl bg-navy-900/50 overflow-hidden hover:border-white/20 transition-colors"
+                className="border border-white/10 rounded-xl bg-neutral-900/50 overflow-hidden hover:border-white/20 transition-colors"
               >
                 <button 
                   onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                   className="w-full text-left p-6 flex justify-between items-center gap-4"
                 >
-                  <span className={`text-lg font-medium transition-colors ${expandedFaq === index ? 'text-gold-400' : 'text-slate-200'}`}>
+                  <span className={`text-lg font-medium transition-colors ${expandedFaq === index ? 'text-gold-400' : 'text-neutral-200'}`}>
                     {faq.q}
                   </span>
-                  <ChevronDown className={`text-slate-400 shrink-0 transition-transform duration-300 ${expandedFaq === index ? 'rotate-180 text-gold-400' : ''}`} size={20} />
+                  <ChevronDown className={`text-neutral-400 shrink-0 transition-transform duration-300 ${expandedFaq === index ? 'rotate-180 text-gold-400' : ''}`} size={20} />
                 </button>
                 <AnimatePresence initial={false}>
                   {expandedFaq === index && (
@@ -428,7 +446,7 @@ export default function EnnovateX() {
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       className={shouldAnimate ? "overflow-hidden" : ""}
                     >
-                      <div className="p-6 pt-0 text-slate-400 text-base leading-relaxed">
+                      <div className="p-6 pt-0 text-neutral-400 text-base leading-relaxed">
                         {faq.a}
                       </div>
                     </motion.div>
@@ -449,7 +467,7 @@ export default function EnnovateX() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={isMobile ? { duration: 0.4, ease: "easeOut" } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-10 md:p-16 bg-navy-900/50 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center border border-gold-500/30 rounded-3xl p-10 md:p-16 bg-neutral-900/50 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
         >
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 tracking-tight">
             Registrations Open
@@ -459,15 +477,15 @@ export default function EnnovateX() {
           </p>
           
           <div className="flex flex-wrap justify-center gap-6 mb-12">
-            <div className="flex items-center gap-2 text-slate-300">
+            <div className="flex items-center gap-2 text-neutral-300">
               <div className="w-1.5 h-1.5 bg-gold-500 rounded-full" />
               <span>Limited seats</span>
             </div>
-            <div className="flex items-center gap-2 text-slate-300">
+            <div className="flex items-center gap-2 text-neutral-300">
               <div className="w-1.5 h-1.5 bg-gold-500 rounded-full" />
               <span>Competitive selection</span>
             </div>
-            <div className="flex items-center gap-2 text-slate-300">
+            <div className="flex items-center gap-2 text-neutral-300">
               <div className="w-1.5 h-1.5 bg-gold-500 rounded-full" />
               <span>Structured 3-Day immersive journey</span>
             </div>
