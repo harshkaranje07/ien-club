@@ -9,60 +9,80 @@ import apiRoutes from './routes/api.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
-// Security Middleware
+// ---------------- SECURITY ----------------
 app.use(helmet());
 
-// CORS Configuration
+// ---------------- CORS FIX ----------------
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// ---------------- BODY PARSER ----------------
 app.use(express.json());
 
-// Rate limiting
+// ---------------- RATE LIMIT ----------------
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: 'Too many requests from this IP, please try again later.'
 });
+
 app.use('/api', limiter);
 
-// Connect to MongoDB
+// ---------------- DATABASE ----------------
 const mongoUri = process.env.MONGO_URI;
+
 if (mongoUri && (mongoUri.startsWith('mongodb://') || mongoUri.startsWith('mongodb+srv://'))) {
   mongoose.connect(mongoUri)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((error) => console.error('MongoDB connection error:', error));
+    .then(() => {
+      console.log('Connected to MongoDB');
+    })
+    .catch((error) => {
+      console.error('MongoDB connection error:', error);
+    });
 } else {
   console.warn('Valid MONGO_URI not found. Running without database connection.');
 }
 
-// Health check
+// ---------------- HEALTH CHECK ----------------
 app.get('/api/health', (req: Request, res: Response) => {
-  res.json({ status: 'ok', message: 'EnnovateX API is running' });
+  res.json({
+    status: 'ok',
+    message: 'EnnovateX API is running'
+  });
 });
 
-// API Routes
+// ---------------- API ROUTES ----------------
 app.use('/api', apiRoutes);
 
-// 404 Handler
+// ---------------- 404 ----------------
 app.use((req: Request, res: Response) => {
-  res.status(404).json({ message: 'Route not found' });
+  res.status(404).json({
+    message: 'Route not found'
+  });
 });
 
-// Global Error Handler
+// ---------------- GLOBAL ERROR ----------------
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+
   console.error('Unhandled Error:', err);
+
   const status = err.status || 500;
   const message = err.message || 'Internal Server Error';
-  res.status(status).json({ message, ...(process.env.NODE_ENV === 'development' && { stack: err.stack }) });
+
+  res.status(status).json({
+    message,
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+
 });
 
+// ---------------- SERVER ----------------
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

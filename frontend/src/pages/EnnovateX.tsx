@@ -98,7 +98,6 @@ export default function EnnovateX() {
   }, []);
 
   const shouldAnimate = !prefersReducedMotion && !isMobile;
-
   return (
     <div className="overflow-x-hidden relative min-h-screen pt-24 md:pt-32 font-sans bg-black antialiased">
       {/* Hero Section */}
@@ -479,7 +478,7 @@ export default function EnnovateX() {
           </div>
 
           <div className="relative inline-block">
-            <Button href="#" size="lg" className="relative text-lg px-12 py-6 bg-gradient-to-r from-yellow-400 to-gold-500 text-black font-bold hover:brightness-110 shadow-[0_0_30px_rgba(212,175,55,0.4)] border-none transition-all duration-300 hover:scale-105">
+            <Button href="/ennovatex/register" size="lg" className="relative text-lg px-12 py-6 bg-gradient-to-r from-yellow-400 to-gold-500 text-black font-bold hover:brightness-110 shadow-[0_0_30px_rgba(212,175,55,0.4)] border-none transition-all duration-300 hover:scale-105">
               Register for Ennovate’X
             </Button>
           </div>
